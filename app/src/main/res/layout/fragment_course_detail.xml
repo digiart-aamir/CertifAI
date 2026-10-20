@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_light"
+    android:padding="20dp">
+
+    <TextView
+        android:id="@+id/tvCourseTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Python for AI &amp; Automation"
+        android:textColor="@color/text_primary_light"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvDescription"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="Master Python fundamentals, modules, functions, API calls, and automated scripting designed specifically for AI workflows."
+        android:textColor="@color/text_secondary_light"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvCourseTitle" />
+
+    <LinearLayout
+        android:id="@+id/llActions"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvDescription">
+
+        <Button
+            android:id="@+id/btnStartPlayer"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/bg_primary_button"
+            android:text="▶  Start Course Lessons"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            app:backgroundTint="@null" />
+
+        <Button
+            android:id="@+id/btnTakeQuiz"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/bg_card_surface"
+            android:text="📝 Take Knowledge Quiz"
+            android:textAllCaps="false"
+            android:textColor="@color/electric_blue"
+            android:textSize="15sp"
+            app:backgroundTint="@null" />
+
+        <Button
+            android:id="@+id/btnViewProject"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:background="@drawable/bg_card_surface"
+            android:text="🛠️ View Practical Project"
+            android:textAllCaps="false"
+            android:textColor="@color/text_primary_light"
+            android:textSize="15sp"
+            app:backgroundTint="@null" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

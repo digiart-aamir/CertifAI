@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="350dp"
+    android:layout_marginHorizontal="16dp"
+    android:layout_marginVertical="24dp"
+    app:cardBackgroundColor="@color/surface_light"
+    app:cardCornerRadius="28dp"
+    app:cardElevation="8dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_card_surface"
+        android:padding="24dp">
+
+        <!-- Top Stage Chip Badge -->
+        <TextView
+            android:id="@+id/tvStageBadge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_chip_selected"
+            android:paddingHorizontal="14dp"
+            android:paddingVertical="6dp"
+            android:text="Stage 2 of 10"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Rating Badge -->
+        <TextView
+            android:id="@+id/tvRating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#102563EB"
+            android:paddingHorizontal="12dp"
+            android:paddingVertical="6dp"
+            android:text="★ 4.9"
+            android:textColor="@color/electric_blue"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Course Title -->
+        <TextView
+            android:id="@+id/tvCourseTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Python for AI &amp; Automation"
+            android:textColor="@color/text_primary_light"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvStageBadge" />
+
+        <!-- Metadata Row (Category, Level, Duration) -->
+        <LinearLayout
+            android:id="@+id/llMetadata"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvCourseTitle">
+
+            <TextView
+                android:id="@+id/tvCategory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:background="#102563EB"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="4dp"
+                android:text="Python"
+                android:textColor="@color/electric_blue"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvLevel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:background="@color/border_light"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="4dp"
+                android:text="Beginner"
+                android:textColor="@color/text_secondary_light"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tvDuration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/border_light"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="4dp"
+                android:text="12 Hours"
+                android:textColor="@color/text_secondary_light"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <!-- Description -->
+        <TextView
+            android:id="@+id/tvDescription"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:ellipsize="end"
+            android:maxLines="3"
+            android:text="Master Python fundamentals, modules, functions, API calls, and automated scripting designed specifically for AI workflows."
+            android:textColor="@color/text_secondary_light"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/llMetadata" />
+
+        <!-- Progress Section -->
+        <LinearLayout
+            android:id="@+id/llProgress"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvDescription">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Course Progress"
+                    android:textColor="@color/text_secondary_light"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tvProgressPercent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="65%"
+                    android:textColor="@color/electric_blue"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <ProgressBar
+                android:id="@+id/pbProgress"
+                style="@android:style/Widget.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="8dp"
+                android:layout_marginTop="6dp"
+                android:max="100"
+                android:progress="65"
+                android:progressDrawable="@drawable/bg_primary_button" />
+        </LinearLayout>
+
+        <!-- Action Button -->
+        <Button
+            android:id="@+id/btnStartCourse"
+            android:layout_width="0dp"
+            android:layout_height="52dp"
+            android:background="@drawable/bg_primary_button"
+            android:text="▶  Resume Learning"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:backgroundTint="@null"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

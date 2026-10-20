@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    tools:context=".HomeFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:paddingBottom="100dp">
+
+        <!-- Header: Nav Bar Icon (Left) + Search & Profile Icons (Right) -->
+        <LinearLayout
+            android:id="@+id/llHeader"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/ivMenu"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Menu"
+                android:padding="6dp"
+                android:src="@android:drawable/ic_menu_sort_by_size"
+                app:tint="@color/text_primary_light" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <ImageView
+                android:id="@+id/ivSearch"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginEnd="12dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Search"
+                android:padding="6dp"
+                android:src="@android:drawable/ic_menu_search"
+                app:tint="@color/text_primary_light" />
+
+            <ImageView
+                android:id="@+id/ivProfile"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Profile"
+                android:padding="6dp"
+                android:src="@android:drawable/ic_menu_myplaces"
+                app:tint="@color/text_primary_light" />
+        </LinearLayout>
+
+        <!-- Welcome back (smaller text) -->
+        <TextView
+            android:id="@+id/tvWelcomeBack"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Welcome back"
+            android:textColor="@color/text_secondary_light"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/llHeader" />
+
+        <!-- Name (Larger font) -->
+        <TextView
+            android:id="@+id/tvUserName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Muhammad Ali"
+            android:textColor="@color/text_primary_light"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvWelcomeBack" />
+
+        <!-- Current Progress & Enrolled Course Card -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardEnrolled"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            app:cardBackgroundColor="@color/surface_light"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="4dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvUserName">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="20dp">
+
+                <TextView
+                    android:id="@+id/tvEnrolledLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ENROLLED COURSE • IN PROGRESS"
+                    android:textColor="@color/electric_blue"
+                    android:textSize="11sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvEnrolledTitle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:text="Python for AI &amp; Automation"
+                    android:textColor="@color/text_primary_light"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvEnrolledLabel" />
+
+                <ProgressBar
+                    android:id="@+id/pbEnrolled"
+                    style="@android:style/Widget.ProgressBar.Horizontal"
+                    android:layout_width="0dp"
+                    android:layout_height="8dp"
+                    android:layout_marginTop="14dp"
+                    android:max="100"
+                    android:progress="65"
+                    android:progressDrawable="@drawable/bg_primary_button"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvEnrolledTitle" />
+
+                <Button
+                    android:id="@+id/btnContinueEnrolled"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/bg_primary_button"
+                    android:text="▶  Continue Learning (65%)"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    app:backgroundTint="@null"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/pbEnrolled" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Courses Carousel Header -->
+        <TextView
+            android:id="@+id/tvCoursesHeader"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="All AI Courses (Auto-Scrolling)"
+            android:textColor="@color/text_primary_light"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cardEnrolled" />
+
+        <!-- Horizontal Auto-Scrolling Course Carousel -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvHorizontalCarousel"
+            android:layout_width="0dp"
+            android:layout_height="180dp"
+            android:layout_marginTop="12dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvCoursesHeader"
+            tools:listitem="@layout/item_course_horizontal" />
+
+        <!-- Recommended Section Header -->
+        <TextView
+            android:id="@+id/tvRecommendedHeader"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Recommended For You"
+            android:textColor="@color/text_primary_light"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rvHorizontalCarousel" />
+
+        <!-- Recommended Card -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardRecommended"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            app:cardBackgroundColor="@color/surface_light"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="3dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvRecommendedHeader">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_chip_selected"
+                    android:paddingHorizontal="10dp"
+                    android:paddingVertical="4dp"
+                    android:text="Advanced AI"
+                    android:textColor="@color/white"
+                    android:textSize="11sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Autonomous AI Agents &amp; LangChain"
+                    android:textColor="@color/text_primary_light"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="Advanced • 18 Hours • ★ 4.88"
+                    android:textColor="@color/text_secondary_light"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

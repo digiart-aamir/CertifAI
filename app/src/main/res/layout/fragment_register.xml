@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_light"
+    android:padding="24dp">
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Create Account"
+        android:textColor="@color/text_primary_light"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/etName"
+        android:layout_width="0dp"
+        android:layout_height="52dp"
+        android:layout_marginTop="24dp"
+        android:autofillHints="name"
+        android:background="@drawable/bg_card_surface"
+        android:hint="Full Name"
+        android:inputType="textPersonName"
+        android:paddingHorizontal="16dp"
+        android:textColor="@color/text_primary_light"
+        android:textColorHint="@color/text_secondary_light"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvTitle" />
+
+    <EditText
+        android:id="@+id/etEmail"
+        android:layout_width="0dp"
+        android:layout_height="52dp"
+        android:layout_marginTop="16dp"
+        android:autofillHints="emailAddress"
+        android:background="@drawable/bg_card_surface"
+        android:hint="Email Address"
+        android:inputType="textEmailAddress"
+        android:paddingHorizontal="16dp"
+        android:textColor="@color/text_primary_light"
+        android:textColorHint="@color/text_secondary_light"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/etName" />
+
+    <EditText
+        android:id="@+id/etPassword"
+        android:layout_width="0dp"
+        android:layout_height="52dp"
+        android:layout_marginTop="16dp"
+        android:autofillHints="password"
+        android:background="@drawable/bg_card_surface"
+        android:hint="Password"
+        android:inputType="textPassword"
+        android:paddingHorizontal="16dp"
+        android:textColor="@color/text_primary_light"
+        android:textColorHint="@color/text_secondary_light"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/etEmail" />
+
+    <Button
+        android:id="@+id/btnRegister"
+        android:layout_width="0dp"
+        android:layout_height="54dp"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/bg_primary_button"
+        android:text="Start Learning"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:backgroundTint="@null"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/etPassword" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

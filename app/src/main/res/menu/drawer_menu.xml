@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_home"
+        android:icon="@android:drawable/ic_menu_today"
+        android:title="Home" />
+    <item
+        android:id="@+id/nav_pathways"
+        android:icon="@android:drawable/ic_menu_compass"
+        android:title="Learning Pathways" />
+    <item
+        android:id="@+id/nav_certificates"
+        android:icon="@android:drawable/ic_menu_agenda"
+        android:title="Certificates" />
+    <item
+        android:id="@+id/nav_settings"
+        android:icon="@android:drawable/ic_menu_manage"
+        android:title="Settings" />
+    <item
+        android:id="@+id/nav_help"
+        android:icon="@android:drawable/ic_menu_help"
+        android:title="Help &amp; Support" />
+</menu>
