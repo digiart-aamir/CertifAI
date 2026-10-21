@@ -9,4 +9,12 @@
     </style>
 
     <style name="Theme.CertifAI" parent="Base.Theme.CertifAI" />
+
+    <!-- Direct Dark Splash Theme - Transparent icon removes system icon on Android 12+ -->
+    <style name="Theme.CertifAI.Splash" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">#0B1220</item>
+        <item name="windowSplashScreenAnimatedIcon">@android:color/transparent</item>
+        <item name="postSplashScreenTheme">@style/Theme.CertifAI</item>
+        <item name="android:windowBackground">#0B1220</item>
+    </style>
 </resources>
