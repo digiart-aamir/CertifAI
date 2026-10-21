@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/llTopNavTabs"
+    android:layout_width="match_parent"
+    android:layout_height="52dp"
+    android:background="@drawable/bg_glossy_surface"
+    android:elevation="6dp"
+    android:gravity="center"
+    android:orientation="horizontal"
+    android:padding="6dp">
+
+    <TextView
+        android:id="@+id/tabHome"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:fontFamily="sans-serif-medium"
+        android:gravity="center"
+        android:text="Home"
+        android:textColor="@color/text_secondary_light"
+        android:textSize="13sp" />
+
+    <TextView
+        android:id="@+id/tabLearn"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:fontFamily="sans-serif-medium"
+        android:gravity="center"
+        android:text="Learn"
+        android:textColor="@color/text_secondary_light"
+        android:textSize="13sp" />
+
+    <TextView
+        android:id="@+id/tabExplore"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:fontFamily="sans-serif-medium"
+        android:gravity="center"
+        android:text="Explore"
+        android:textColor="@color/text_secondary_light"
+        android:textSize="13sp" />
+
+    <TextView
+        android:id="@+id/tabCertificates"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:fontFamily="sans-serif-medium"
+        android:gravity="center"
+        android:text="Certs"
+        android:textColor="@color/text_secondary_light"
+        android:textSize="13sp" />
+
+    <TextView
+        android:id="@+id/tabProfile"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:fontFamily="sans-serif-medium"
+        android:gravity="center"
+        android:text="Profile"
+        android:textColor="@color/text_secondary_light"
+        android:textSize="13sp" />
+</LinearLayout>

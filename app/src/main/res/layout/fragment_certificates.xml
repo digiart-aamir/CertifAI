@@ -6,6 +6,16 @@
     android:background="@color/bg_light"
     android:padding="20dp">
 
+    <include
+        android:id="@+id/includeTopNav"
+        layout="@layout/view_top_nav"
+        android:layout_width="0dp"
+        android:layout_height="52dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/tvTitle"
         android:layout_width="0dp"
@@ -17,7 +27,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/includeTopNav" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardCert1"
@@ -34,6 +44,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/bg_glossy_surface"
             android:orientation="vertical"
             android:padding="20dp">
 

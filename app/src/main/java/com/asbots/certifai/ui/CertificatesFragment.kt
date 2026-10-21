@@ -25,6 +25,16 @@ class CertificatesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        TopNavHelper.setupTopNav(
+            this,
+            binding.includeTopNav.tabHome,
+            binding.includeTopNav.tabLearn,
+            binding.includeTopNav.tabExplore,
+            binding.includeTopNav.tabCertificates,
+            binding.includeTopNav.tabProfile,
+            R.id.certificatesFragment
+        )
+
         binding.btnViewCert.setOnClickListener {
             findNavController().navigate(R.id.certificateDetailFragment)
         }

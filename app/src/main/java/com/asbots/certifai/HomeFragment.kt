@@ -9,9 +9,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.asbots.certifai.R
 import com.asbots.certifai.data.SampleData
 import com.asbots.certifai.databinding.FragmentHomeBinding
+import com.asbots.certifai.ui.TopNavHelper
 import com.asbots.certifai.ui.carousel.CourseHorizontalAdapter
 
 class HomeFragment : Fragment() {
@@ -46,6 +46,17 @@ class HomeFragment : Fragment() {
         binding.ivSearch.setOnClickListener {
             findNavController().navigate(R.id.exploreFragment)
         }
+
+        // Top Glossy Navigation Tabs via TopNavHelper
+        TopNavHelper.setupTopNav(
+            this,
+            binding.includeTopNav.tabHome,
+            binding.includeTopNav.tabLearn,
+            binding.includeTopNav.tabExplore,
+            binding.includeTopNav.tabCertificates,
+            binding.includeTopNav.tabProfile,
+            R.id.homeFragment
+        )
 
         // View All Courses click -> open Explore screen with vertical list
         binding.tvViewAllCourses.setOnClickListener {
