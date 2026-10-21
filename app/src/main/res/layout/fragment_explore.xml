@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg_light"
@@ -11,7 +12,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="Explore AI Courses"
+        android:text="Explore All Courses"
         android:textColor="@color/text_primary_light"
         android:textSize="28sp"
         android:textStyle="bold"
@@ -58,7 +59,7 @@
                 android:background="@drawable/bg_chip_selected"
                 android:paddingHorizontal="16dp"
                 android:paddingVertical="8dp"
-                android:text="All Courses"
+                android:text="All"
                 android:textColor="@color/white"
                 android:textSize="13sp"
                 android:textStyle="bold" />
@@ -97,5 +98,19 @@
 
         </LinearLayout>
     </HorizontalScrollView>
+
+    <!-- Vertical List of All Courses -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvExploreCourses"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:clipToPadding="false"
+        android:paddingBottom="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/hsvFilters"
+        tools:listitem="@layout/item_course_carousel" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

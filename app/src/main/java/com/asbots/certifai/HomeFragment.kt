@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import com.asbots.certifai.R
 import com.asbots.certifai.data.SampleData
 import com.asbots.certifai.databinding.FragmentHomeBinding
 import com.asbots.certifai.ui.carousel.CourseHorizontalAdapter
@@ -44,6 +44,11 @@ class HomeFragment : Fragment() {
         }
 
         binding.ivSearch.setOnClickListener {
+            findNavController().navigate(R.id.exploreFragment)
+        }
+
+        // View All Courses click -> open Explore screen with vertical list
+        binding.tvViewAllCourses.setOnClickListener {
             findNavController().navigate(R.id.exploreFragment)
         }
 
