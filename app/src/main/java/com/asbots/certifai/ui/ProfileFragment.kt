@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.asbots.certifai.R
 import com.asbots.certifai.databinding.FragmentProfileBinding
 
@@ -33,6 +35,21 @@ class ProfileFragment : Fragment() {
             binding.includeTopNav.tabProfile,
             R.id.profileFragment
         )
+
+        binding.switchDarkMode.setOnCheckedChangeListener { _, isChecked ->
+            val msg = if (isChecked) "Dark Mode Enabled" else "Light Mode Enabled"
+            Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
+        }
+
+        binding.switchNotifications.setOnCheckedChangeListener { _, isChecked ->
+            val msg = if (isChecked) "Push Notifications Enabled" else "Notifications Disabled"
+            Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
+        }
+
+        binding.btnLogout.setOnClickListener {
+            Toast.makeText(requireContext(), "Logged out successfully", Toast.LENGTH_SHORT).show()
+            findNavController().navigate(R.id.loginFragment)
+        }
     }
 
     override fun onDestroyView() {
