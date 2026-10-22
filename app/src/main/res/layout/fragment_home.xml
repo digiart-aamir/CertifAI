@@ -62,17 +62,6 @@
                 app:tint="@color/text_primary_light" />
         </LinearLayout>
 
-        <!-- Glossy Segmented Top Navigation Bar -->
-        <include
-            android:id="@+id/includeTopNav"
-            layout="@layout/view_top_nav"
-            android:layout_width="0dp"
-            android:layout_height="52dp"
-            android:layout_marginTop="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/llHeader" />
-
         <!-- Welcome back (smaller text) -->
         <TextView
             android:id="@+id/tvWelcomeBack"
@@ -84,7 +73,7 @@
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/includeTopNav" />
+            app:layout_constraintTop_toBottomOf="@id/llHeader" />
 
         <!-- Name (Larger font) -->
         <TextView

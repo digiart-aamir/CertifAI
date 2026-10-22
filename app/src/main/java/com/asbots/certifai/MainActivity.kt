@@ -1,6 +1,7 @@
 package com.asbots.certifai
 
 import android.os.Bundle
+import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -31,7 +32,66 @@ class MainActivity : AppCompatActivity() {
             .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
 
+        setupStaticTopNav()
         setupNavigationDrawer()
+    }
+
+    private fun setupStaticTopNav() {
+        val topNav = binding.includeTopNav
+        val tabs = listOf(
+            topNav.tabHome to R.id.homeFragment,
+            topNav.tabLearn to R.id.learnFragment,
+            topNav.tabExplore to R.id.exploreFragment,
+            topNav.tabCertificates to R.id.certificatesFragment,
+            topNav.tabProfile to R.id.profileFragment
+        )
+
+        tabs.forEach { (tabView, destId) ->
+            tabView.setOnClickListener { view ->
+                if (navController.currentDestination?.id != destId) {
+                    view.animate()
+                        .alpha(0.6f)
+                        .scaleX(0.92f)
+                        .scaleY(0.92f)
+                        .setDuration(120)
+                        .withEndAction {
+                            view.animate()
+                                .alpha(1f)
+                                .scaleX(1f)
+                                .scaleY(1f)
+                                .setDuration(120)
+                                .withEndAction {
+                                    navController.navigate(destId)
+                                }
+                                .start()
+                        }
+                        .start()
+                }
+            }
+        }
+
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            when (destination.id) {
+                R.id.homeFragment, R.id.learnFragment, R.id.exploreFragment,
+                R.id.certificatesFragment, R.id.profileFragment -> {
+                    topNav.llTopNavTabs.visibility = View.VISIBLE
+                    // Highlight active tab
+                    tabs.forEach { (t, destId) ->
+                        val isActive = destId == destination.id
+                        t.setBackgroundResource(if (isActive) R.drawable.bg_primary_button else android.R.color.transparent)
+                        t.setTextColor(
+                            resources.getColor(
+                                if (isActive) android.R.color.white else R.color.text_secondary_light,
+                                null
+                            )
+                        )
+                    }
+                }
+                else -> {
+                    topNav.llTopNavTabs.visibility = View.GONE
+                }
+            }
+        }
     }
 
     private fun setupNavigationDrawer() {
