@@ -129,7 +129,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="🎯 Daily Goal: 20 / 30 mins"
+                        android:text="Daily Goal: 20 / 30 mins"
                         android:textColor="@color/text_primary_light"
                         android:textSize="13sp"
                         android:textStyle="bold" />
@@ -137,7 +137,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="🔥 5 Day Streak"
+                        android:text="5 Day Streak"
                         android:textColor="@color/gold_badge"
                         android:textSize="13sp"
                         android:textStyle="bold" />
@@ -177,7 +177,7 @@
                     android:background="@drawable/bg_chip_selected"
                     android:paddingHorizontal="14dp"
                     android:paddingVertical="8dp"
-                    android:text="⚡ All Skills"
+                    android:text="All Skills"
                     android:textColor="@color/white"
                     android:textSize="12sp"
                     android:textStyle="bold" />
@@ -189,7 +189,7 @@
                     android:background="@drawable/bg_chip_unselected"
                     android:paddingHorizontal="14dp"
                     android:paddingVertical="8dp"
-                    android:text="🐍 Python"
+                    android:text="Python"
                     android:textColor="@color/text_secondary_light"
                     android:textSize="12sp" />
 
@@ -200,7 +200,7 @@
                     android:background="@drawable/bg_chip_unselected"
                     android:paddingHorizontal="14dp"
                     android:paddingVertical="8dp"
-                    android:text="🤖 LLMs &amp; GenAI"
+                    android:text="LLMs &amp; GenAI"
                     android:textColor="@color/text_secondary_light"
                     android:textSize="12sp" />
 
@@ -211,7 +211,7 @@
                     android:background="@drawable/bg_chip_unselected"
                     android:paddingHorizontal="14dp"
                     android:paddingVertical="8dp"
-                    android:text="🧠 RAG"
+                    android:text="RAG"
                     android:textColor="@color/text_secondary_light"
                     android:textSize="12sp" />
 
@@ -221,7 +221,7 @@
                     android:background="@drawable/bg_chip_unselected"
                     android:paddingHorizontal="14dp"
                     android:paddingVertical="8dp"
-                    android:text="🛠️ Agents"
+                    android:text="Agents"
                     android:textColor="@color/text_secondary_light"
                     android:textSize="12sp" />
 
@@ -290,7 +290,7 @@
                     android:layout_height="48dp"
                     android:layout_marginTop="16dp"
                     android:background="@drawable/bg_primary_button"
-                    android:text="▶  Continue Learning (65%)"
+                    android:text="Continue Learning (65%)"
                     android:textAllCaps="false"
                     android:textColor="@color/white"
                     android:textSize="14sp"
@@ -327,7 +327,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="💡 DAILY AI PROMPT TIP"
+                    android:text="DAILY AI PROMPT TIP"
                     android:textColor="@color/electric_blue"
                     android:textSize="11sp"
                     android:textStyle="bold" />
@@ -419,7 +419,7 @@
                 android:background="@drawable/bg_card_surface"
                 android:gravity="center"
                 android:padding="12dp"
-                android:text="🏆 Python Pro"
+                android:text="Python Pro"
                 android:textColor="@color/text_primary_light"
                 android:textSize="12sp"
                 android:textStyle="bold" />
@@ -432,7 +432,7 @@
                 android:background="@drawable/bg_card_surface"
                 android:gravity="center"
                 android:padding="12dp"
-                android:text="🧠 RAG Pioneer"
+                android:text="RAG Pioneer"
                 android:textColor="@color/text_primary_light"
                 android:textSize="12sp"
                 android:textStyle="bold" />
@@ -444,7 +444,7 @@
                 android:background="@drawable/bg_card_surface"
                 android:gravity="center"
                 android:padding="12dp"
-                android:text="⚡ 5-Day Streak"
+                android:text="5-Day Streak"
                 android:textColor="@color/text_primary_light"
                 android:textSize="12sp"
                 android:textStyle="bold" />
@@ -538,7 +538,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="🤖 CERTFAI AI ASSISTANT"
+                    android:text="CERTFAI AI ASSISTANT"
                     android:textColor="@color/electric_blue"
                     android:textSize="11sp"
                     android:textStyle="bold" />
@@ -558,7 +558,7 @@
                     android:layout_height="46dp"
                     android:layout_marginTop="14dp"
                     android:background="@drawable/bg_primary_button"
-                    android:text="💬  Chat with AI Tutor"
+                    android:text="Chat with AI Tutor"
                     android:textAllCaps="false"
                     android:textColor="@color/white"
                     android:textSize="14sp"
