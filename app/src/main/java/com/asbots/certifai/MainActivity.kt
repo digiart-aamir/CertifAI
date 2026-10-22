@@ -48,7 +48,13 @@ class MainActivity : AppCompatActivity() {
 
         tabs.forEach { (tabView, destId) ->
             tabView.setOnClickListener { view ->
-                if (navController.currentDestination?.id != destId) {
+                val currentDestId = try {
+                    navController.currentDestination?.id
+                } catch (e: Exception) {
+                    null
+                }
+
+                if (currentDestId != destId) {
                     view.animate()
                         .alpha(0.6f)
                         .scaleX(0.92f)
@@ -61,7 +67,11 @@ class MainActivity : AppCompatActivity() {
                                 .scaleY(1f)
                                 .setDuration(120)
                                 .withEndAction {
-                                    navController.navigate(destId)
+                                    try {
+                                        navController.navigate(destId)
+                                    } catch (e: Exception) {
+                                        // Ignore navigation race condition if already navigating
+                                    }
                                 }
                                 .start()
                         }
