@@ -100,6 +100,134 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvWelcomeBack" />
 
+        <!-- Feature 1: Daily Learning Goal & Streak Card -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardDailyGoal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:cardBackgroundColor="@color/surface_light"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvUserName">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_card_surface"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="🎯 Daily Goal: 20 / 30 mins"
+                        android:textColor="@color/text_primary_light"
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="🔥 5 Day Streak"
+                        android:textColor="@color/gold_badge"
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <ProgressBar
+                    style="@android:style/Widget.ProgressBar.Horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="6dp"
+                    android:layout_marginTop="10dp"
+                    android:max="30"
+                    android:progress="20"
+                    android:progressDrawable="@drawable/bg_primary_button" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Feature 2: Quick Skill Filter Chips Row -->
+        <HorizontalScrollView
+            android:id="@+id/hsvQuickSkills"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:scrollbars="none"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cardDailyGoal">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/bg_chip_selected"
+                    android:paddingHorizontal="14dp"
+                    android:paddingVertical="8dp"
+                    android:text="⚡ All Skills"
+                    android:textColor="@color/white"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/bg_chip_unselected"
+                    android:paddingHorizontal="14dp"
+                    android:paddingVertical="8dp"
+                    android:text="🐍 Python"
+                    android:textColor="@color/text_secondary_light"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/bg_chip_unselected"
+                    android:paddingHorizontal="14dp"
+                    android:paddingVertical="8dp"
+                    android:text="🤖 LLMs &amp; GenAI"
+                    android:textColor="@color/text_secondary_light"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/bg_chip_unselected"
+                    android:paddingHorizontal="14dp"
+                    android:paddingVertical="8dp"
+                    android:text="🧠 RAG"
+                    android:textColor="@color/text_secondary_light"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_chip_unselected"
+                    android:paddingHorizontal="14dp"
+                    android:paddingVertical="8dp"
+                    android:text="🛠️ Agents"
+                    android:textColor="@color/text_secondary_light"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+        </HorizontalScrollView>
+
         <!-- Current Progress & Enrolled Course Card -->
         <androidx.cardview.widget.CardView
             android:id="@+id/cardEnrolled"
@@ -108,15 +236,15 @@
             android:layout_marginTop="20dp"
             app:cardBackgroundColor="@color/surface_light"
             app:cardCornerRadius="20dp"
-            app:cardElevation="4dp"
+            app:cardElevation="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvUserName">
+            app:layout_constraintTop_toBottomOf="@id/hsvQuickSkills">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_glossy_surface"
+                android:background="@drawable/bg_card_surface"
                 android:padding="20dp">
 
                 <TextView
@@ -176,6 +304,44 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
 
+        <!-- Feature 3: Daily AI Insight / Tip Card -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardAiTip"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            app:cardBackgroundColor="@color/surface_light"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cardEnrolled">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_card_surface"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="💡 DAILY AI PROMPT TIP"
+                    android:textColor="@color/electric_blue"
+                    android:textSize="11sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:text="Use system prompts with few-shot examples for robust, structured JSON outputs from LLMs."
+                    android:textColor="@color/text_primary_light"
+                    android:textSize="14sp" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
         <!-- Courses Carousel Header + View All -->
         <LinearLayout
             android:id="@+id/llCoursesHeaderRow"
@@ -186,7 +352,7 @@
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/cardEnrolled">
+            app:layout_constraintTop_toBottomOf="@id/cardAiTip">
 
             <TextView
                 android:layout_width="0dp"
@@ -221,6 +387,69 @@
             app:layout_constraintTop_toBottomOf="@id/llCoursesHeaderRow"
             tools:listitem="@layout/item_course_horizontal" />
 
+        <!-- Feature 4: Unlocked Achievement Badges Row -->
+        <TextView
+            android:id="@+id/tvBadgesHeader"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Your Achievements &amp; Badges"
+            android:textColor="@color/text_primary_light"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rvHorizontalCarousel" />
+
+        <LinearLayout
+            android:id="@+id/llBadgesRow"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvBadgesHeader">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_card_surface"
+                android:gravity="center"
+                android:padding="12dp"
+                android:text="🏆 Python Pro"
+                android:textColor="@color/text_primary_light"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_card_surface"
+                android:gravity="center"
+                android:padding="12dp"
+                android:text="🧠 RAG Pioneer"
+                android:textColor="@color/text_primary_light"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/bg_card_surface"
+                android:gravity="center"
+                android:padding="12dp"
+                android:text="⚡ 5-Day Streak"
+                android:textColor="@color/text_primary_light"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
         <!-- Recommended Section Header -->
         <TextView
             android:id="@+id/tvRecommendedHeader"
@@ -233,7 +462,7 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/rvHorizontalCarousel" />
+            app:layout_constraintTop_toBottomOf="@id/llBadgesRow" />
 
         <!-- Recommended Card -->
         <androidx.cardview.widget.CardView
@@ -243,7 +472,7 @@
             android:layout_marginTop="12dp"
             app:cardBackgroundColor="@color/surface_light"
             app:cardCornerRadius="16dp"
-            app:cardElevation="3dp"
+            app:cardElevation="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvRecommendedHeader">
@@ -251,7 +480,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_glossy_surface"
+                android:background="@drawable/bg_card_surface"
                 android:orientation="vertical"
                 android:padding="16dp">
 
@@ -283,6 +512,58 @@
                     android:textColor="@color/text_secondary_light"
                     android:textSize="12sp" />
 
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Feature 5: AI Tutor Quick Prompt Banner -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardAiTutor"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            app:cardBackgroundColor="@color/surface_light"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cardRecommended">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_glossy_surface"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="🤖 CERTFAI AI ASSISTANT"
+                    android:textColor="@color/electric_blue"
+                    android:textSize="11sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="Need help with Python code or AI concepts? Ask your personal AI tutor."
+                    android:textColor="@color/text_primary_light"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/btnAskAi"
+                    android:layout_width="match_parent"
+                    android:layout_height="46dp"
+                    android:layout_marginTop="14dp"
+                    android:background="@drawable/bg_primary_button"
+                    android:text="💬  Chat with AI Tutor"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    app:backgroundTint="@null" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
