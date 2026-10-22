@@ -28,16 +28,6 @@ class ExploreFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        TopNavHelper.setupTopNav(
-            this,
-            binding.includeTopNav.tabHome,
-            binding.includeTopNav.tabLearn,
-            binding.includeTopNav.tabExplore,
-            binding.includeTopNav.tabCertificates,
-            binding.includeTopNav.tabProfile,
-            R.id.exploreFragment
-        )
-
         val adapter = CourseCarouselAdapter(SampleData.courses) { course ->
             val bundle = Bundle().apply { putString("courseId", course.id) }
             findNavController().navigate(R.id.courseDetailFragment, bundle)

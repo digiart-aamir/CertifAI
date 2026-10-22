@@ -33,19 +33,6 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Header actions
-        binding.ivMenu.setOnClickListener {
-            (requireActivity() as? MainActivity)?.openDrawer()
-        }
-
-        binding.ivProfile.setOnClickListener {
-            findNavController().navigate(R.id.profileFragment)
-        }
-
-        binding.ivSearch.setOnClickListener {
-            findNavController().navigate(R.id.exploreFragment)
-        }
-
         // View All Courses click -> open Explore screen with vertical list
         binding.tvViewAllCourses.setOnClickListener {
             findNavController().navigate(R.id.exploreFragment)

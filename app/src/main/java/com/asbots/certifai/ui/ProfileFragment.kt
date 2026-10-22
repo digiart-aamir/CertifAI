@@ -26,16 +26,6 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        TopNavHelper.setupTopNav(
-            this,
-            binding.includeTopNav.tabHome,
-            binding.includeTopNav.tabLearn,
-            binding.includeTopNav.tabExplore,
-            binding.includeTopNav.tabCertificates,
-            binding.includeTopNav.tabProfile,
-            R.id.profileFragment
-        )
-
         binding.switchDarkMode.setOnCheckedChangeListener { _, isChecked ->
             val msg = if (isChecked) "Dark Mode Enabled" else "Light Mode Enabled"
             Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()

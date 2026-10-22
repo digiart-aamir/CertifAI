@@ -32,8 +32,21 @@ class MainActivity : AppCompatActivity() {
             .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
 
+        setupHeaderActions()
         setupStaticTopNav()
         setupNavigationDrawer()
+    }
+
+    private fun setupHeaderActions() {
+        binding.ivMenu.setOnClickListener {
+            openDrawer()
+        }
+        binding.ivSearch.setOnClickListener {
+            navController.navigate(R.id.exploreFragment)
+        }
+        binding.ivProfile.setOnClickListener {
+            navController.navigate(R.id.profileFragment)
+        }
     }
 
     private fun setupStaticTopNav() {
@@ -47,35 +60,18 @@ class MainActivity : AppCompatActivity() {
         )
 
         tabs.forEach { (tabView, destId) ->
-            tabView.setOnClickListener { view ->
-                val currentDestId = try {
-                    navController.currentDestination?.id
+            tabView.setOnClickListener { _ ->
+                try {
+                    val currentDestId = navController.currentDestination?.id
+                    if (currentDestId != destId) {
+                        navController.navigate(destId)
+                    }
                 } catch (e: Exception) {
-                    null
-                }
-
-                if (currentDestId != destId) {
-                    view.animate()
-                        .alpha(0.6f)
-                        .scaleX(0.92f)
-                        .scaleY(0.92f)
-                        .setDuration(120)
-                        .withEndAction {
-                            view.animate()
-                                .alpha(1f)
-                                .scaleX(1f)
-                                .scaleY(1f)
-                                .setDuration(120)
-                                .withEndAction {
-                                    try {
-                                        navController.navigate(destId)
-                                    } catch (e: Exception) {
-                                        // Ignore navigation race condition if already navigating
-                                    }
-                                }
-                                .start()
-                        }
-                        .start()
+                    try {
+                        navController.navigate(destId)
+                    } catch (ex: Exception) {
+                        // Fallback catch
+                    }
                 }
             }
         }
@@ -84,6 +80,7 @@ class MainActivity : AppCompatActivity() {
             when (destination.id) {
                 R.id.homeFragment, R.id.learnFragment, R.id.exploreFragment,
                 R.id.certificatesFragment, R.id.profileFragment -> {
+                    binding.llTopHeader.visibility = View.VISIBLE
                     topNav.llTopNavTabs.visibility = View.VISIBLE
                     // Highlight active tab
                     tabs.forEach { (t, destId) ->
@@ -98,6 +95,7 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
                 else -> {
+                    binding.llTopHeader.visibility = View.GONE
                     topNav.llTopNavTabs.visibility = View.GONE
                 }
             }
