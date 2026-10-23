@@ -5,8 +5,10 @@
     android:id="@+id/drawerLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/bg_light"
     android:fitsSystemWindows="true"
-    app:sliderType="slide"
+    app:sliderType="doorIn"
+    app:elevation="0dp"
     tools:openDrawer="start">
 
     <LinearLayout
@@ -90,8 +92,9 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:background="@color/surface_light"
-        app:headerLayout="@android:layout/activity_list_item"
+        app:elevation="5dp"
+        android:background="@android:color/transparent"
+        app:headerLayout="@layout/nav_header_drawer"
         app:menu="@menu/drawer_menu" />
 
 </com.mindinventory.midrawer.MIDrawerView>
