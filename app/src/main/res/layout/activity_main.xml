@@ -5,74 +5,29 @@
     android:id="@+id/drawerLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg_light"
+    android:background="@color/white"
     android:fitsSystemWindows="true"
-    app:sliderType="doorIn"
     app:elevation="0dp"
+    android:elevation="0dp"
+    app:sliderType="doorIn"
     tools:openDrawer="start">
 
+    <!-- Main Activity Screen Container (Dashboard - Clean) -->
     <LinearLayout
         android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/bg_light"
+        android:background="@color/white"
         android:orientation="vertical">
 
-        <!-- Top Header: Nav Drawer Icon (Left) + Search & Profile Icons (Right) -->
-        <LinearLayout
-            android:id="@+id/llTopHeader"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="20dp"
-            android:layout_marginTop="12dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:id="@+id/ivMenu"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:contentDescription="Menu"
-                android:padding="6dp"
-                android:src="@android:drawable/ic_menu_sort_by_size"
-                app:tint="@color/text_primary_light" />
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_weight="1" />
-
-            <ImageView
-                android:id="@+id/ivSearch"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:layout_marginEnd="12dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:contentDescription="Search"
-                android:padding="6dp"
-                android:src="@android:drawable/ic_menu_search"
-                app:tint="@color/text_primary_light" />
-
-            <ImageView
-                android:id="@+id/ivProfile"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:contentDescription="Profile"
-                android:padding="6dp"
-                android:src="@android:drawable/ic_menu_myplaces"
-                app:tint="@color/text_primary_light" />
-        </LinearLayout>
-
-        <!-- Static Top Navigation Bar (Positioned below the top header) -->
+        <!-- Unified Top Navigation Capsule Bar -->
         <include
             android:id="@+id/includeTopNav"
             layout="@layout/view_top_nav"
             android:layout_width="match_parent"
             android:layout_height="52dp"
-            android:layout_marginHorizontal="20dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp" />
 
         <!-- Main Fragment Container (Fills rest of screen) -->
@@ -87,14 +42,97 @@
 
     </LinearLayout>
 
-    <com.google.android.material.navigation.NavigationView
-        android:id="@+id/navigationView"
-        android:layout_width="wrap_content"
+    <!-- Drawer Panel Container (ONLY visible when drawer is opened) -->
+    <LinearLayout
+        android:id="@+id/llDrawerPanel"
+        android:layout_width="320dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        app:elevation="5dp"
-        android:background="@android:color/transparent"
-        app:headerLayout="@layout/nav_header_drawer"
-        app:menu="@menu/drawer_menu" />
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:paddingBottom="20dp">
+
+        <!-- Drawer Header -->
+        <include layout="@layout/nav_header_drawer" />
+
+        <!-- Navigation Menu Items -->
+        <com.google.android.material.navigation.NavigationView
+            android:id="@+id/navigationView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:elevation="0dp"
+            app:elevation="0dp"
+            app:menu="@menu/drawer_menu" />
+
+        <!-- Divider Line -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginBottom="12dp"
+            android:background="@color/border_light" />
+
+        <!-- Monochrome Bottom Action Bar (Inside Drawer ONLY) -->
+        <LinearLayout
+            android:id="@+id/llDrawerBottomActions"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingHorizontal="20dp">
+
+            <!-- 1. Logout -->
+            <ImageView
+                android:id="@+id/ivDrawerActionLogout"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Logout"
+                android:padding="8dp"
+                android:src="@android:drawable/ic_lock_power_off"
+                app:tint="@color/text_primary_light" />
+
+            <!-- 2. Refresh -->
+            <ImageView
+                android:id="@+id/ivDrawerActionRefresh"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Refresh"
+                android:padding="8dp"
+                android:src="@android:drawable/ic_menu_rotate"
+                app:tint="@color/text_primary_light" />
+
+            <!-- 3. Theme Toggle -->
+            <ImageView
+                android:id="@+id/ivDrawerActionTheme"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Theme"
+                android:padding="8dp"
+                android:src="@android:drawable/ic_menu_compass"
+                app:tint="@color/text_primary_light" />
+
+            <!-- 4. Settings -->
+            <ImageView
+                android:id="@+id/ivDrawerActionSettings"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Settings"
+                android:padding="8dp"
+                android:src="@android:drawable/ic_menu_preferences"
+                app:tint="@color/text_primary_light" />
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 </com.mindinventory.midrawer.MIDrawerView>
