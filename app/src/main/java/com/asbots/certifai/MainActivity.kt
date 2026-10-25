@@ -151,11 +151,7 @@ class MainActivity : AppCompatActivity() {
                     contentAlignment = Alignment.Center
                 ) {
                     val isSelectedTab = index == selectedIndex
-                    val iconTint = when {
-                        index == 0 || index == 5 -> ComposeColor(0xFF64748B) // Slate Grey for Nav Drawer & Profile
-                        isSelectedTab -> ComposeColor(0xFF2563EB)             // Electric Blue for selected middle tab
-                        else -> ComposeColor(0xFFBCD2FA)                      // Light Blue for unselected middle tabs
-                    }
+                    val iconTint = if (isSelectedTab) ComposeColor(0xFF2563EB) else ComposeColor(0xFF64748B)
                     Icon(
                         painter = painterResource(id = drawableRes),
                         contentDescription = null,
