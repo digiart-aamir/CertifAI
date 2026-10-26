@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardNode"
+    android:layout_width="230dp"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="8dp"
+    android:layout_marginVertical="6dp"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="3dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_card_surface"
+        android:orientation="vertical"
+        android:padding="14dp">
+
+        <!-- Top Header Row: Icon + Badges -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <!-- Node Icon -->
+            <TextView
+                android:id="@+id/tvNodeIcon"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:background="#122563EB"
+                android:gravity="center"
+                android:text="▷"
+                android:textColor="@color/electric_blue"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1" />
+
+            <!-- Free or Coins Badge -->
+            <TextView
+                android:id="@+id/tvNodeBadge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#1210B981"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="3dp"
+                android:text="FREE"
+                android:textColor="#10B981"
+                android:textSize="10sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <!-- Node Title -->
+        <TextView
+            android:id="@+id/tvNodeTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="Syntax &amp; Setup"
+            android:textColor="@color/text_primary_light"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <!-- Node Subtitle -->
+        <TextView
+            android:id="@+id/tvNodeSubtitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="Variables &amp; I/O"
+            android:textColor="@color/text_secondary_light"
+            android:textSize="12sp" />
+
+        <!-- Bottom Row: Duration Pill -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/tvNodeDuration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#1264748B"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="3dp"
+                android:text="🔒 10m"
+                android:textColor="@color/text_secondary_light"
+                android:textSize="10sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import com.asbots.certifai.data.SampleData
+import com.asbots.certifai.data.repository.CertifaiRepository
 import com.asbots.certifai.databinding.FragmentQuizBinding
 
 class QuizFragment : Fragment() {
@@ -25,12 +25,11 @@ class QuizFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val courseId = arguments?.getString("courseId") ?: "course_1"
-        val course = SampleData.courses.find { it.id == courseId } ?: SampleData.courses.first()
-        val question = course.quizQuestions.firstOrNull()
+        val sampleQuiz = CertifaiRepository.getSampleQuiz()
+        val question = sampleQuiz.firstOrNull()
 
         if (question != null) {
-            binding.tvQuestion.text = question.questionText
+            binding.tvQuestion.text = question.question
             binding.rbOpt1.text = question.options.getOrNull(0) ?: "Option 1"
             binding.rbOpt2.text = question.options.getOrNull(1) ?: "Option 2"
             binding.rbOpt3.text = question.options.getOrNull(2) ?: "Option 3"
@@ -38,7 +37,7 @@ class QuizFragment : Fragment() {
         }
 
         binding.btnSubmitQuiz.setOnClickListener {
-            Toast.makeText(requireContext(), "Quiz Submitted! Score: 100% 🎯", Toast.LENGTH_LONG).show()
+            Toast.makeText(requireContext(), "Quiz Submitted! Score: 100% (+25 ASCoins) 🎯", Toast.LENGTH_LONG).show()
         }
     }
 

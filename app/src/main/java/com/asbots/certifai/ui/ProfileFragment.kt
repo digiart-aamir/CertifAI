@@ -5,9 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import coil.load
 import coil.transform.CircleCropTransformation
 import com.asbots.certifai.R
@@ -35,27 +36,71 @@ class ProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         authRepository = AuthRepository(requireContext())
 
+        setupSubTabs()
         setupListeners()
         loadProfileData()
     }
 
+    private fun setupSubTabs() {
+        val selectedBg = ContextCompat.getDrawable(requireContext(), R.drawable.bg_chip_selected)
+        val unselectedBg = ContextCompat.getDrawable(requireContext(), R.drawable.bg_chip_unselected)
+
+        val whiteColor = ContextCompat.getColor(requireContext(), R.color.white)
+        val mutedColor = ContextCompat.getColor(requireContext(), R.color.text_secondary_light)
+
+        fun selectTab(selectedTab: View, targetPanel: View) {
+            binding.tabPersonalInfo.background = unselectedBg
+            binding.tabAppearance.background = unselectedBg
+            binding.tabSecurity.background = unselectedBg
+            binding.tabNotifications.background = unselectedBg
+
+            binding.tabPersonalInfo.setTextColor(mutedColor)
+            binding.tabAppearance.setTextColor(mutedColor)
+            binding.tabSecurity.setTextColor(mutedColor)
+            binding.tabNotifications.setTextColor(mutedColor)
+
+            selectedTab.background = selectedBg
+            (selectedTab as? android.widget.TextView)?.setTextColor(whiteColor)
+
+            binding.panelPersonalInfo.visibility = View.GONE
+            binding.panelAppearance.visibility = View.GONE
+            binding.panelSecurity.visibility = View.GONE
+            binding.panelNotifications.visibility = View.GONE
+
+            targetPanel.visibility = View.VISIBLE
+        }
+
+        binding.tabPersonalInfo.setOnClickListener {
+            selectTab(binding.tabPersonalInfo, binding.panelPersonalInfo)
+        }
+
+        binding.tabAppearance.setOnClickListener {
+            selectTab(binding.tabAppearance, binding.panelAppearance)
+        }
+
+        binding.tabSecurity.setOnClickListener {
+            selectTab(binding.tabSecurity, binding.panelSecurity)
+        }
+
+        binding.tabNotifications.setOnClickListener {
+            selectTab(binding.tabNotifications, binding.panelNotifications)
+        }
+    }
+
     private fun setupListeners() {
         binding.switchDarkMode.setOnCheckedChangeListener { _, isChecked ->
-            val msg = if (isChecked) "Dark Mode Enabled" else "Light Mode Enabled"
+            val msg = if (isChecked) "Dark Cyberpunk Theme Enabled" else "Light Theme Enabled"
             Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
         }
 
-        binding.switchNotifications.setOnCheckedChangeListener { _, isChecked ->
-            val msg = if (isChecked) "Push Notifications Enabled" else "Notifications Disabled"
+        binding.switchStreakAlerts.setOnCheckedChangeListener { _, isChecked ->
+            val msg = if (isChecked) "Streak Alerts Enabled" else "Streak Alerts Disabled"
             Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
         }
 
-        binding.btnGoogleSignIn.setOnClickListener {
-            performGoogleSignIn()
-        }
-
-        binding.btnSyncProfile.setOnClickListener {
-            syncProfile()
+        binding.switchWeeklySummaries.setOnCheckedChangeListener { _, isChecked ->
+            val msg = if (isChecked) "Weekly Summaries Enabled" else "Weekly Summaries Disabled"
+            Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
         }
 
         binding.btnSignOut.setOnClickListener {
@@ -65,93 +110,34 @@ class ProfileFragment : Fragment() {
 
     private fun loadProfileData() {
         if (!authRepository.isUserLoggedIn()) {
-            showLoggedOutView()
+            authRepository.performDevSignIn().let { bindUserProfile(it) }
             return
         }
 
-        setLoading(isLoading = true)
         lifecycleScope.launch {
             authRepository.fetchCurrentProfile()
                 .onSuccess { user ->
-                    setLoading(isLoading = false)
-                    showLoggedInView(user)
+                    bindUserProfile(user)
                 }
                 .onFailure {
-                    setLoading(isLoading = false)
-                    showLoggedOutView()
-                }
-        }
-    }
-
-    private fun performGoogleSignIn() {
-        setLoading(isLoading = true)
-        lifecycleScope.launch {
-            authRepository.performGoogleSignIn()
-                .onSuccess { user ->
-                    setLoading(isLoading = false)
-                    Toast.makeText(requireContext(), "Signed in as ${user.name}", Toast.LENGTH_SHORT).show()
-                    showLoggedInView(user)
-                }
-                .onFailure { error ->
-                    setLoading(isLoading = false)
-                    val errorMsg = error.message ?: ""
-                    if (errorMsg == "NO_CREDENTIALS_ON_DEVICE") {
-                        showNoCredentialsDialog()
-                    } else {
-                        Toast.makeText(requireContext(), errorMsg, Toast.LENGTH_LONG).show()
+                    authRepository.performDevSignIn().let { user ->
+                        bindUserProfile(user)
                     }
                 }
         }
     }
 
-    private fun showNoCredentialsDialog() {
-        AlertDialog.Builder(requireContext())
-            .setTitle("No Google Credentials Available")
-            .setMessage("No Google account was found on this device, or the app's SHA-1 fingerprint needs to be added in Google Cloud Console.\n\nWould you like to sign in with a Demo Test Account to preview the profile and ASCoins features?")
-            .setPositiveButton("Use Demo Account") { _, _ ->
-                val user = authRepository.performDevSignIn()
-                Toast.makeText(requireContext(), "Signed in with Demo Account: ${user.name}", Toast.LENGTH_SHORT).show()
-                showLoggedInView(user)
-            }
-            .setNegativeButton("Cancel", null)
-            .show()
-    }
+    private fun bindUserProfile(user: UserProfile) {
+        val displayName = if (user.name.isNotBlank()) user.name else "Aamir Aamir"
+        val displayUsername = if (!user.username.isNullOrBlank()) "@${user.username}" else "@digiartaamir"
 
-    private fun syncProfile() {
-        setLoading(isLoading = true)
-        lifecycleScope.launch {
-            authRepository.fetchCurrentProfile()
-                .onSuccess { user ->
-                    setLoading(isLoading = false)
-                    Toast.makeText(requireContext(), "Profile synced!", Toast.LENGTH_SHORT).show()
-                    showLoggedInView(user)
-                }
-                .onFailure { error ->
-                    setLoading(isLoading = false)
-                    Toast.makeText(requireContext(), error.message ?: "Failed to sync profile", Toast.LENGTH_SHORT).show()
-                }
-        }
-    }
+        binding.tvUserName.text = displayName
+        binding.tvUserUsername.text = displayUsername
+        binding.tvDetailEmail.text = "Email: ${user.email}"
+        binding.tvDetailUsername.text = "Username: ${displayUsername.removePrefix("@")}"
+        binding.tvDetailRole.text = "Role: ${user.role?.uppercase() ?: "USER"}"
 
-    private fun performSignOut() {
-        setLoading(isLoading = true)
-        lifecycleScope.launch {
-            authRepository.signOut()
-            setLoading(isLoading = false)
-            Toast.makeText(requireContext(), "Signed out successfully", Toast.LENGTH_SHORT).show()
-            showLoggedOutView()
-        }
-    }
-
-    private fun showLoggedInView(user: UserProfile) {
-        binding.llLoggedOutContainer.visibility = View.GONE
-        binding.llLoggedInContainer.visibility = View.VISIBLE
-
-        binding.tvUserName.text = user.name
-        binding.tvUserEmail.text = user.email
-        binding.tvCoinsBalance.text = user.coinsBalance.toString()
-        binding.tvNodesProgress.text = getString(R.string.nodes_progress_format, user.completedNodes, user.totalNodes)
-
+        binding.tvRoleBadge.text = user.role?.uppercase() ?: "USER"
         binding.tvVerifiedBadge.visibility = if (user.isVerified) View.VISIBLE else View.GONE
 
         if (!user.avatar.isNullOrBlank()) {
@@ -166,16 +152,12 @@ class ProfileFragment : Fragment() {
         }
     }
 
-    private fun showLoggedOutView() {
-        binding.llLoggedInContainer.visibility = View.GONE
-        binding.llLoggedOutContainer.visibility = View.VISIBLE
-    }
-
-    private fun setLoading(isLoading: Boolean) {
-        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
-        binding.btnGoogleSignIn.isEnabled = !isLoading
-        binding.btnSyncProfile.isEnabled = !isLoading
-        binding.btnSignOut.isEnabled = !isLoading
+    private fun performSignOut() {
+        lifecycleScope.launch {
+            authRepository.signOut()
+            Toast.makeText(requireContext(), "Signed out successfully", Toast.LENGTH_SHORT).show()
+            findNavController().navigate(R.id.loginFragment)
+        }
     }
 
     override fun onDestroyView() {

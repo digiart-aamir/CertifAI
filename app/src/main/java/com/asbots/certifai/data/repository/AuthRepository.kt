@@ -29,31 +29,14 @@ class AuthRepository(
     // Server Web Client ID from Google Cloud Console Specification
     private val webClientId = "834293250211-qeo0r7e2hn4tvspavsd1nlp7ilik8msc.apps.googleusercontent.com"
 
-    private val devUser = UserProfile(
-        id = 42,
-        name = "Alex Johnson",
-        username = "alexjohnson",
-        email = "alex.johnson@gmail.com",
-        avatar = "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400",
-        role = "user",
-        status = "active",
-        isVerified = true,
-        createdAt = "2026-10-25 18:00:00",
-        coinsBalance = 150,
-        completedNodes = 8,
-        totalNodes = 36
-    )
-
     suspend fun performGoogleSignIn(): Result<UserProfile> = withContext(Dispatchers.IO) {
         try {
-            // Option 1: GetGoogleIdOption
             val googleIdOption = GetGoogleIdOption.Builder()
                 .setFilterByAuthorizedAccounts(false)
                 .setServerClientId(webClientId)
                 .setAutoSelectEnabled(false)
                 .build()
 
-            // Option 2: GetSignInWithGoogleOption Fallback Prompt
             val signInWithGoogleOption = GetSignInWithGoogleOption.Builder(webClientId)
                 .build()
 
@@ -69,54 +52,35 @@ class AuthRepository(
                 val googleIdTokenCredential = GoogleIdTokenCredential.createFrom(credential.data)
                 val idToken = googleIdTokenCredential.idToken
 
-                // Post Token to ASBots Universal Backend
+                val realName = googleIdTokenCredential.displayName ?: googleIdTokenCredential.givenName ?: "Learner"
+                val realEmail = googleIdTokenCredential.id
+                val realAvatar = googleIdTokenCredential.profilePictureUri?.toString()
+
                 val apiResponse = try {
                     apiService.signInWithGoogle(GoogleSignInRequest(idToken = idToken))
                 } catch (e: Exception) {
                     null
                 }
 
-                if (apiResponse != null && apiResponse.isSuccessful) {
-                    val authBody = apiResponse.body()
-                    val token = authBody?.authToken ?: "session_active_${System.currentTimeMillis()}"
-                    val profile = authBody?.user ?: UserProfile(
-                        id = 1,
-                        name = googleIdTokenCredential.displayName ?: googleIdTokenCredential.givenName ?: "Learner",
-                        username = googleIdTokenCredential.id.substringBefore("@"),
-                        email = googleIdTokenCredential.id,
-                        avatar = googleIdTokenCredential.profilePictureUri?.toString(),
-                        role = "user",
-                        status = "active",
-                        isVerified = true,
-                        createdAt = null,
-                        coinsBalance = 100,
-                        completedNodes = 5,
-                        totalNodes = 36
-                    )
+                val token = apiResponse?.body()?.authToken ?: "session_active_${System.currentTimeMillis()}"
+                val profile = apiResponse?.body()?.user ?: UserProfile(
+                    id = 1,
+                    name = realName,
+                    username = realEmail.substringBefore("@"),
+                    email = realEmail,
+                    avatar = realAvatar,
+                    role = "user",
+                    status = "active",
+                    isVerified = true,
+                    createdAt = null,
+                    coinsBalance = 150,
+                    completedNodes = 8,
+                    totalNodes = 36
+                )
 
-                    tokenManager.saveAuthToken(token)
-                    Result.success(profile)
-                } else {
-                    // Fallback to local profile created from Google ID Token credentials
-                    val token = "session_active_${System.currentTimeMillis()}"
-                    val profile = UserProfile(
-                        id = 1,
-                        name = googleIdTokenCredential.displayName ?: googleIdTokenCredential.givenName ?: "Learner",
-                        username = googleIdTokenCredential.id.substringBefore("@"),
-                        email = googleIdTokenCredential.id,
-                        avatar = googleIdTokenCredential.profilePictureUri?.toString(),
-                        role = "user",
-                        status = "active",
-                        isVerified = true,
-                        createdAt = null,
-                        coinsBalance = 100,
-                        completedNodes = 5,
-                        totalNodes = 36
-                    )
-
-                    tokenManager.saveAuthToken(token)
-                    Result.success(profile)
-                }
+                tokenManager.saveAuthToken(token)
+                tokenManager.saveUserProfile(profile.name, profile.email, profile.avatar)
+                Result.success(profile)
             } else {
                 Result.failure(Exception("Unexpected credential type received."))
             }
@@ -132,32 +96,59 @@ class AuthRepository(
     }
 
     fun performDevSignIn(): UserProfile {
+        val devProfile = UserProfile(
+            id = 42,
+            name = "Demo Learner",
+            username = "demolearner",
+            email = "demo.learner@asbots.com",
+            avatar = "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400",
+            role = "user",
+            status = "active",
+            isVerified = true,
+            createdAt = "2026-10-25 18:00:00",
+            coinsBalance = 150,
+            completedNodes = 8,
+            totalNodes = 36
+        )
         tokenManager.saveAuthToken(DEV_TOKEN)
-        return devUser
+        tokenManager.saveUserProfile(devProfile.name, devProfile.email, devProfile.avatar)
+        return devProfile
     }
 
     suspend fun fetchCurrentProfile(): Result<UserProfile> = withContext(Dispatchers.IO) {
         val token = tokenManager.getAuthToken()
             ?: return@withContext Result.failure(Exception("Not logged in"))
 
-        if (token == DEV_TOKEN) {
-            return@withContext Result.success(devUser)
-        }
+        val savedName = tokenManager.getUserName() ?: "Learner"
+        val savedEmail = tokenManager.getUserEmail() ?: "user@asbots.com"
+        val savedAvatar = tokenManager.getUserAvatar()
+
+        val localProfile = UserProfile(
+            id = 1,
+            name = savedName,
+            username = savedEmail.substringBefore("@"),
+            email = savedEmail,
+            avatar = savedAvatar,
+            role = "user",
+            status = "active",
+            isVerified = true,
+            createdAt = null,
+            coinsBalance = 150,
+            completedNodes = 8,
+            totalNodes = 36
+        )
 
         try {
             val response = apiService.getProfile("Bearer $token")
-            if (response.isSuccessful && response.body()?.status == "success") {
-                val user = response.body()?.user
-                    ?: return@withContext Result.failure(Exception("No profile returned"))
-                Result.success(user)
+            if (response.isSuccessful && response.body()?.user != null) {
+                val serverUser = response.body()!!.user!!
+                tokenManager.saveUserProfile(serverUser.name, serverUser.email, serverUser.avatar)
+                Result.success(serverUser)
             } else {
-                if (response.code() == 401) {
-                    tokenManager.clearAuthToken()
-                }
-                Result.failure(Exception("Failed to load user profile"))
+                Result.success(localProfile)
             }
         } catch (e: Exception) {
-            Result.failure(e)
+            Result.success(localProfile)
         }
     }
 

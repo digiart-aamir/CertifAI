@@ -26,7 +26,13 @@ class CertificatesFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.btnViewCert.setOnClickListener {
-            findNavController().navigate(R.id.certificateDetailFragment)
+            val bundle = Bundle().apply { putString("certId", "cert_1") }
+            findNavController().navigate(R.id.certificateDetailFragment, bundle)
+        }
+
+        binding.btnViewCert2.setOnClickListener {
+            val bundle = Bundle().apply { putString("certId", "cert_2") }
+            findNavController().navigate(R.id.certificateDetailFragment, bundle)
         }
     }
 
