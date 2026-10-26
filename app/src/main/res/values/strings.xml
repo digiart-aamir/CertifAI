@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">CertifAI</string>
+    <string name="nodes_progress_format">%1$d/%2$d</string>
 </resources>

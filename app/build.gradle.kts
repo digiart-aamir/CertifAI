@@ -47,6 +47,23 @@ dependencies {
     implementation(libs.androidx.navigation.ui.ktx)
     implementation(libs.material)
 
+    // Google Credential Manager & Google Play Services Auth
+    implementation("androidx.credentials:credentials:1.3.0")
+    implementation("androidx.credentials:credentials-play-services-auth:1.3.0")
+    implementation("com.google.android.libraries.identity.googleid:googleid:1.1.1")
+    implementation("com.google.android.gms:play-services-auth:21.2.0")
+
+    // Encrypted Preferences
+    implementation("androidx.security:security-crypto:1.1.0-alpha06")
+
+    // Retrofit 2 & Gson
+    implementation("com.squareup.retrofit2:retrofit:2.11.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.11.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
+
+    // Coil for Image Loading
+    implementation("io.coil-kt:coil:2.6.0")
+
     // Compose BOM & Runtime for Exyte Animated Navigation Bar
     implementation(platform("androidx.compose:compose-bom:2024.09.00"))
     implementation("androidx.compose.ui:ui")

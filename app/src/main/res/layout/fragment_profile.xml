@@ -18,7 +18,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:text="User Profile &amp; Settings"
+            android:text="My Account &amp; Profile"
             android:textColor="@color/text_primary_light"
             android:textSize="26sp"
             android:textStyle="bold"
@@ -26,217 +26,304 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <!-- Profile Header Card -->
+        <!-- Logged Out View -->
         <LinearLayout
-            android:id="@+id/llUserCard"
+            android:id="@+id/llLoggedOutContainer"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="24dp"
             android:background="@drawable/bg_card_surface"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:padding="20dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="24dp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvTitle"
+            tools:visibility="gone">
+
+            <ImageView
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/ic_certifai_shield" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Welcome to ASBots"
+                android:textColor="@color/text_primary_light"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:text="Sign in with your Google Account to sync your CertifAI roadmap nodes, courses, and ASCoins balance."
+                android:textColor="@color/text_secondary_light"
+                android:textSize="13sp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnGoogleSignIn"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:layout_marginTop="24dp"
+                android:backgroundTint="#FFFFFF"
+                android:text="Sign in with Google"
+                android:textAllCaps="false"
+                android:textColor="#1F2937"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:cornerRadius="12dp"
+                app:icon="@android:drawable/ic_menu_compass"
+                app:iconGravity="textStart"
+                app:iconPadding="10dp"
+                app:iconTint="#4285F4" />
+
+        </LinearLayout>
+
+        <!-- Logged In Container -->
+        <LinearLayout
+            android:id="@+id/llLoggedInContainer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvTitle">
 
+            <!-- Profile Header Card -->
+            <LinearLayout
+                android:id="@+id/llUserCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/bg_card_surface"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="20dp">
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/ivAvatar"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_certifai_shield"
+                    app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Full" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvUserName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Learner"
+                        android:textColor="@color/text_primary_light"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvUserEmail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="learner@asbots.com"
+                        android:textColor="@color/text_secondary_light"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/tvVerifiedBadge"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:background="#1034D399"
+                        android:paddingHorizontal="8dp"
+                        android:paddingVertical="2dp"
+                        android:text="✓ Verified Learner"
+                        android:textColor="#10B981"
+                        android:textSize="11sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Learning Stats Summary Grid -->
+            <LinearLayout
+                android:id="@+id/llStatsGrid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal">
+
+                <!-- ASCoins Balance Card -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_card_surface"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="🪙 ASCoins"
+                        android:textColor="@color/gold_badge"
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvCoinsBalance"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:text="0"
+                        android:textColor="@color/text_primary_light"
+                        android:textSize="24sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="Available Balance"
+                        android:textColor="@color/text_secondary_light"
+                        android:textSize="11sp" />
+                </LinearLayout>
+
+                <!-- CertifAI Nodes Progress Card -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_card_surface"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="🎯 CertifAI"
+                        android:textColor="@color/electric_blue"
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvNodesProgress"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:text="0/36"
+                        android:textColor="@color/text_primary_light"
+                        android:textSize="24sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="Completed Nodes"
+                        android:textColor="@color/text_secondary_light"
+                        android:textSize="11sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Sync Button -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSyncProfile"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="16dp"
+                android:text="Sync Profile Stats"
+                android:textAllCaps="false"
+                android:textColor="@color/electric_blue"
+                android:textSize="14sp"
+                app:cornerRadius="12dp"
+                app:strokeColor="@color/electric_blue" />
+
+            <!-- App Preferences Section -->
             <TextView
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:background="@drawable/bg_primary_button"
-                android:fontFamily="sans-serif-medium"
-                android:gravity="center"
-                android:text="MA"
-                android:textColor="@color/white"
-                android:textSize="20sp"
+                android:id="@+id/tvPreferencesHeader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="Preferences &amp; Settings"
+                android:textColor="@color/text_primary_light"
+                android:textSize="18sp"
                 android:textStyle="bold" />
 
             <LinearLayout
-                android:layout_width="0dp"
+                android:id="@+id/llPreferencesCard"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_weight="1"
-                android:orientation="vertical">
+                android:layout_marginTop="12dp"
+                android:background="@drawable/bg_card_surface"
+                android:orientation="vertical"
+                android:padding="16dp">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/switchDarkMode"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Muhammad Ali"
+                    android:paddingVertical="8dp"
+                    android:text="Dark Mode"
                     android:textColor="@color/text_primary_light"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
+                    android:textSize="15sp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginVertical="8dp"
+                    android:background="@color/border_light" />
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/switchNotifications"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="ali@certifai.app • Pakistan"
-                    android:textColor="@color/text_secondary_light"
-                    android:textSize="13sp" />
+                    android:paddingVertical="8dp"
+                    android:text="Push Notifications"
+                    android:textColor="@color/text_primary_light"
+                    android:textSize="15sp" />
 
             </LinearLayout>
-        </LinearLayout>
 
-        <!-- Learning Stats Summary Grid -->
-        <LinearLayout
-            android:id="@+id/llStatsGrid"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/llUserCard">
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_weight="1"
-                android:background="@drawable/bg_card_surface"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:padding="16dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="4"
-                    android:textColor="@color/electric_blue"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:text="Enrolled"
-                    android:textColor="@color/text_secondary_light"
-                    android:textSize="12sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="4dp"
-                android:layout_weight="1"
-                android:background="@drawable/bg_card_surface"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:padding="16dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="2"
-                    android:textColor="@color/electric_blue"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:text="Completed"
-                    android:textColor="@color/text_secondary_light"
-                    android:textSize="12sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_weight="1"
-                android:background="@drawable/bg_card_surface"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:padding="16dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="2"
-                    android:textColor="@color/gold_badge"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:text="Certificates"
-                    android:textColor="@color/text_secondary_light"
-                    android:textSize="12sp" />
-            </LinearLayout>
-        </LinearLayout>
-
-        <!-- App Preferences Section -->
-        <TextView
-            android:id="@+id/tvPreferencesHeader"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="Preferences &amp; Settings"
-            android:textColor="@color/text_primary_light"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/llStatsGrid" />
-
-        <LinearLayout
-            android:id="@+id/llPreferencesCard"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:background="@drawable/bg_card_surface"
-            android:orientation="vertical"
-            android:padding="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvPreferencesHeader">
-
-            <androidx.appcompat.widget.SwitchCompat
-                android:id="@+id/switchDarkMode"
+            <!-- Sign Out Button -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSignOut"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingVertical="8dp"
-                android:text="Dark Mode"
-                android:textColor="@color/text_primary_light"
-                android:textSize="15sp" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginVertical="8dp"
-                android:background="@color/border_light" />
-
-            <androidx.appcompat.widget.SwitchCompat
-                android:id="@+id/switchNotifications"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingVertical="8dp"
-                android:text="Push Notifications"
-                android:textColor="@color/text_primary_light"
-                android:textSize="15sp" />
+                android:layout_height="52dp"
+                android:layout_marginTop="24dp"
+                android:backgroundTint="#DC2626"
+                android:text="Sign Out"
+                android:textAllCaps="false"
+                android:textColor="#FFFFFF"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:cornerRadius="12dp" />
 
         </LinearLayout>
 
-        <!-- Logout Button -->
-        <Button
-            android:id="@+id/btnLogout"
-            android:layout_width="0dp"
-            android:layout_height="52dp"
-            android:layout_marginTop="32dp"
-            android:background="@drawable/bg_card_surface"
-            android:text="Log Out"
-            android:textAllCaps="false"
-            android:textColor="#DC2626"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            app:backgroundTint="@null"
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminateTint="@color/electric_blue"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/llPreferencesCard" />
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
