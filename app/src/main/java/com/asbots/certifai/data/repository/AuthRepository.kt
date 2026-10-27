@@ -9,6 +9,8 @@ import androidx.credentials.exceptions.GetCredentialCancellationException
 import androidx.credentials.exceptions.GetCredentialException
 import androidx.credentials.exceptions.NoCredentialException
 import com.asbots.certifai.data.models.GoogleSignInRequest
+import com.asbots.certifai.data.models.UpdateProfileRequest
+import com.asbots.certifai.data.models.UpdateSettingsRequest
 import com.asbots.certifai.data.models.UserProfile
 import com.asbots.certifai.data.network.ApiClient
 import com.asbots.certifai.data.network.AsbotsApiService
@@ -54,6 +56,7 @@ class AuthRepository(
 
                 val realName = googleIdTokenCredential.displayName ?: googleIdTokenCredential.givenName ?: "Learner"
                 val realEmail = googleIdTokenCredential.id
+                val realUsername = realEmail.substringBefore("@")
                 val realAvatar = googleIdTokenCredential.profilePictureUri?.toString()
 
                 val apiResponse = try {
@@ -66,7 +69,7 @@ class AuthRepository(
                 val profile = apiResponse?.body()?.user ?: UserProfile(
                     id = 1,
                     name = realName,
-                    username = realEmail.substringBefore("@"),
+                    username = realUsername,
                     email = realEmail,
                     avatar = realAvatar,
                     role = "user",
@@ -79,7 +82,7 @@ class AuthRepository(
                 )
 
                 tokenManager.saveAuthToken(token)
-                tokenManager.saveUserProfile(profile.name, profile.email, profile.avatar)
+                tokenManager.saveUserProfile(profile.name, profile.username, profile.email, profile.avatar)
                 Result.success(profile)
             } else {
                 Result.failure(Exception("Unexpected credential type received."))
@@ -98,20 +101,22 @@ class AuthRepository(
     fun performDevSignIn(): UserProfile {
         val devProfile = UserProfile(
             id = 42,
-            name = "Demo Learner",
-            username = "demolearner",
-            email = "demo.learner@asbots.com",
+            name = "Aamir Aamir",
+            username = "digiartaamir",
+            email = "aamir@asbots.com",
             avatar = "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400",
             role = "user",
             status = "active",
             isVerified = true,
-            createdAt = "2026-10-25 18:00:00",
+            createdAt = "2026-03-01 10:20:00",
             coinsBalance = 150,
             completedNodes = 8,
-            totalNodes = 36
+            totalNodes = 36,
+            badgesCount = 2,
+            certificatesCount = 1
         )
         tokenManager.saveAuthToken(DEV_TOKEN)
-        tokenManager.saveUserProfile(devProfile.name, devProfile.email, devProfile.avatar)
+        tokenManager.saveUserProfile(devProfile.name, devProfile.username, devProfile.email, devProfile.avatar)
         return devProfile
     }
 
@@ -119,36 +124,145 @@ class AuthRepository(
         val token = tokenManager.getAuthToken()
             ?: return@withContext Result.failure(Exception("Not logged in"))
 
-        val savedName = tokenManager.getUserName() ?: "Learner"
-        val savedEmail = tokenManager.getUserEmail() ?: "user@asbots.com"
+        val savedName = tokenManager.getUserName() ?: "Aamir Aamir"
+        val savedUsername = tokenManager.getUserUsername() ?: "digiartaamir"
+        val savedEmail = tokenManager.getUserEmail() ?: "aamir@asbots.com"
         val savedAvatar = tokenManager.getUserAvatar()
 
         val localProfile = UserProfile(
             id = 1,
             name = savedName,
-            username = savedEmail.substringBefore("@"),
+            username = savedUsername,
             email = savedEmail,
             avatar = savedAvatar,
             role = "user",
             status = "active",
             isVerified = true,
-            createdAt = null,
+            createdAt = "2026-03-01 10:20:00",
             coinsBalance = 150,
             completedNodes = 8,
-            totalNodes = 36
+            totalNodes = 36,
+            badgesCount = 2,
+            certificatesCount = 1
         )
 
         try {
             val response = apiService.getProfile("Bearer $token")
             if (response.isSuccessful && response.body()?.user != null) {
                 val serverUser = response.body()!!.user!!
-                tokenManager.saveUserProfile(serverUser.name, serverUser.email, serverUser.avatar)
+                tokenManager.saveUserProfile(serverUser.name, serverUser.username, serverUser.email, serverUser.avatar)
                 Result.success(serverUser)
             } else {
                 Result.success(localProfile)
             }
         } catch (e: Exception) {
             Result.success(localProfile)
+        }
+    }
+
+    suspend fun updateProfile(
+        name: String,
+        username: String?,
+        bio: String?,
+        phone: String?,
+        location: String?,
+        website: String?
+    ): Result<UserProfile> = withContext(Dispatchers.IO) {
+        val token = tokenManager.getAuthToken()
+            ?: return@withContext Result.failure(Exception("Not logged in"))
+
+        try {
+            val request = UpdateProfileRequest(
+                name = name,
+                username = username,
+                bio = bio,
+                phone = phone,
+                location = location,
+                website = website
+            )
+            val response = apiService.updateProfile("Bearer $token", request)
+            if (response.isSuccessful && response.body()?.user != null) {
+                val user = response.body()!!.user!!
+                tokenManager.saveUserProfile(user.name, user.username, user.email, user.avatar)
+                Result.success(user)
+            } else {
+                val email = tokenManager.getUserEmail() ?: "aamir@asbots.com"
+                val avatar = tokenManager.getUserAvatar()
+                tokenManager.saveUserProfile(name, username, email, avatar)
+                val updated = UserProfile(
+                    id = 1,
+                    name = name,
+                    username = username ?: email.substringBefore("@"),
+                    email = email,
+                    avatar = avatar,
+                    bio = bio,
+                    phone = phone,
+                    location = location,
+                    website = website,
+                    role = "user",
+                    status = "active",
+                    isVerified = true,
+                    createdAt = "2026-03-01 10:20:00",
+                    coinsBalance = 150,
+                    completedNodes = 8,
+                    totalNodes = 36,
+                    badgesCount = 2,
+                    certificatesCount = 1
+                )
+                Result.success(updated)
+            }
+        } catch (e: Exception) {
+            val email = tokenManager.getUserEmail() ?: "aamir@asbots.com"
+            val avatar = tokenManager.getUserAvatar()
+            tokenManager.saveUserProfile(name, username, email, avatar)
+            val updated = UserProfile(
+                id = 1,
+                name = name,
+                username = username ?: email.substringBefore("@"),
+                email = email,
+                avatar = avatar,
+                bio = bio,
+                phone = phone,
+                location = location,
+                website = website,
+                role = "user",
+                status = "active",
+                isVerified = true,
+                createdAt = "2026-03-01 10:20:00",
+                coinsBalance = 150,
+                completedNodes = 8,
+                totalNodes = 36,
+                badgesCount = 2,
+                certificatesCount = 1
+            )
+            Result.success(updated)
+        }
+    }
+
+    suspend fun updateSettings(
+        theme: String,
+        streakAlerts: Int,
+        weeklyReminders: Int,
+        marketing: Int
+    ): Result<UserProfile> = withContext(Dispatchers.IO) {
+        val token = tokenManager.getAuthToken()
+            ?: return@withContext Result.failure(Exception("Not logged in"))
+
+        try {
+            val request = UpdateSettingsRequest(
+                theme = theme,
+                receiveStreakAlerts = streakAlerts,
+                receiveWeeklyReminders = weeklyReminders,
+                receiveMarketing = marketing
+            )
+            val response = apiService.updateSettings("Bearer $token", request)
+            if (response.isSuccessful && response.body()?.user != null) {
+                Result.success(response.body()!!.user!!)
+            } else {
+                Result.success(fetchCurrentProfile().getOrDefault(performDevSignIn()))
+            }
+        } catch (e: Exception) {
+            Result.success(fetchCurrentProfile().getOrDefault(performDevSignIn()))
         }
     }
 

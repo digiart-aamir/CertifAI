@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
@@ -51,21 +52,21 @@ class ProfileFragment : Fragment() {
         fun selectTab(selectedTab: View, targetPanel: View) {
             binding.tabPersonalInfo.background = unselectedBg
             binding.tabAppearance.background = unselectedBg
-            binding.tabSecurity.background = unselectedBg
             binding.tabNotifications.background = unselectedBg
+            binding.tabSecurity.background = unselectedBg
 
             binding.tabPersonalInfo.setTextColor(mutedColor)
             binding.tabAppearance.setTextColor(mutedColor)
-            binding.tabSecurity.setTextColor(mutedColor)
             binding.tabNotifications.setTextColor(mutedColor)
+            binding.tabSecurity.setTextColor(mutedColor)
 
             selectedTab.background = selectedBg
             (selectedTab as? android.widget.TextView)?.setTextColor(whiteColor)
 
             binding.panelPersonalInfo.visibility = View.GONE
             binding.panelAppearance.visibility = View.GONE
-            binding.panelSecurity.visibility = View.GONE
             binding.panelNotifications.visibility = View.GONE
+            binding.panelSecurity.visibility = View.GONE
 
             targetPanel.visibility = View.VISIBLE
         }
@@ -78,33 +79,30 @@ class ProfileFragment : Fragment() {
             selectTab(binding.tabAppearance, binding.panelAppearance)
         }
 
-        binding.tabSecurity.setOnClickListener {
-            selectTab(binding.tabSecurity, binding.panelSecurity)
-        }
-
         binding.tabNotifications.setOnClickListener {
             selectTab(binding.tabNotifications, binding.panelNotifications)
+        }
+
+        binding.tabSecurity.setOnClickListener {
+            selectTab(binding.tabSecurity, binding.panelSecurity)
         }
     }
 
     private fun setupListeners() {
-        binding.switchDarkMode.setOnCheckedChangeListener { _, isChecked ->
-            val msg = if (isChecked) "Dark Cyberpunk Theme Enabled" else "Light Theme Enabled"
-            Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
+        binding.btnSaveProfile.setOnClickListener {
+            saveProfileChanges()
         }
 
-        binding.switchStreakAlerts.setOnCheckedChangeListener { _, isChecked ->
-            val msg = if (isChecked) "Streak Alerts Enabled" else "Streak Alerts Disabled"
-            Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
+        binding.btnApplyTheme.setOnClickListener {
+            saveAppearanceSettings()
         }
 
-        binding.switchWeeklySummaries.setOnCheckedChangeListener { _, isChecked ->
-            val msg = if (isChecked) "Weekly Summaries Enabled" else "Weekly Summaries Disabled"
-            Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
+        binding.btnSaveNotifications.setOnClickListener {
+            saveNotificationSettings()
         }
 
         binding.btnSignOut.setOnClickListener {
-            performSignOut()
+            showSignOutConfirmation()
         }
     }
 
@@ -133,12 +131,27 @@ class ProfileFragment : Fragment() {
 
         binding.tvUserName.text = displayName
         binding.tvUserUsername.text = displayUsername
-        binding.tvDetailEmail.text = "Email: ${user.email}"
-        binding.tvDetailUsername.text = "Username: ${displayUsername.removePrefix("@")}"
-        binding.tvDetailRole.text = "Role: ${user.role?.uppercase() ?: "USER"}"
 
         binding.tvRoleBadge.text = user.role?.uppercase() ?: "USER"
         binding.tvVerifiedBadge.visibility = if (user.isVerified) View.VISIBLE else View.GONE
+        binding.tvJoinedDateBadge.text = "Joined Mar 2026"
+
+        binding.tvCoinsStat.text = "💎 ${user.coinsBalance} ASCoins"
+        binding.tvNodesStat.text = "🎯 ${user.completedNodes}/${user.totalNodes} Topics"
+        binding.tvBadgesStat.text = "🏆 ${user.badgesCount} Badges"
+
+        // Populate Tab 1 Form Fields
+        binding.etFullName.setText(user.name)
+        binding.etUsername.setText(displayUsername.removePrefix("@"))
+        binding.etEmail.setText(user.email)
+        binding.etPhone.setText(user.phone ?: "")
+        binding.etBio.setText(user.bio ?: "")
+        binding.etLocation.setText(user.location ?: "")
+
+        // Populate Tab 3 Switches
+        val settings = user.settings
+        binding.switchStreakAlerts.isChecked = (settings?.receiveStreakAlerts ?: 1) == 1
+        binding.switchWeeklySummaries.isChecked = (settings?.receiveWeeklyReminders ?: 1) == 1
 
         if (!user.avatar.isNullOrBlank()) {
             binding.ivAvatar.load(user.avatar) {
@@ -150,6 +163,73 @@ class ProfileFragment : Fragment() {
         } else {
             binding.ivAvatar.setImageResource(R.drawable.ic_certifai_shield)
         }
+    }
+
+    private fun saveProfileChanges() {
+        val name = binding.etFullName.text.toString().trim()
+        val username = binding.etUsername.text.toString().trim()
+        val phone = binding.etPhone.text.toString().trim()
+        val bio = binding.etBio.text.toString().trim()
+        val location = binding.etLocation.text.toString().trim()
+
+        if (name.isBlank()) {
+            Toast.makeText(requireContext(), "Full Name cannot be empty", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        lifecycleScope.launch {
+            authRepository.updateProfile(
+                name = name,
+                username = username,
+                bio = bio,
+                phone = phone,
+                location = location,
+                website = null
+            ).onSuccess { updatedUser ->
+                bindUserProfile(updatedUser)
+                Toast.makeText(requireContext(), "Profile updated successfully! 🎉", Toast.LENGTH_SHORT).show()
+            }.onFailure { error ->
+                Toast.makeText(requireContext(), error.message ?: "Failed to update profile", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun saveAppearanceSettings() {
+        val theme = if (binding.switchDarkMode.isChecked) "dark" else "light"
+        lifecycleScope.launch {
+            authRepository.updateSettings(
+                theme = theme,
+                streakAlerts = if (binding.switchStreakAlerts.isChecked) 1 else 0,
+                weeklyReminders = if (binding.switchWeeklySummaries.isChecked) 1 else 0,
+                marketing = 0
+            ).onSuccess {
+                Toast.makeText(requireContext(), "Theme applied successfully! 🎨", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun saveNotificationSettings() {
+        lifecycleScope.launch {
+            authRepository.updateSettings(
+                theme = "system",
+                streakAlerts = if (binding.switchStreakAlerts.isChecked) 1 else 0,
+                weeklyReminders = if (binding.switchWeeklySummaries.isChecked) 1 else 0,
+                marketing = 0
+            ).onSuccess {
+                Toast.makeText(requireContext(), "Notification settings saved! 🔔", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun showSignOutConfirmation() {
+        AlertDialog.Builder(requireContext())
+            .setTitle("Sign Out")
+            .setMessage("Are you sure you want to sign out of your ASBots account?")
+            .setPositiveButton("Sign Out") { _, _ ->
+                performSignOut()
+            }
+            .setNegativeButton("Cancel", null)
+            .show()
     }
 
     private fun performSignOut() {

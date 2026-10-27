@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.asbots.certifai.data.models.MindmapNode
 import com.asbots.certifai.data.repository.AuthRepository
+import com.asbots.certifai.data.repository.CertifaiRepository
 import com.asbots.certifai.databinding.FragmentHomeBinding
 import com.asbots.certifai.ui.roadmap.MindmapNodeAdapter
 import kotlinx.coroutines.launch
@@ -51,9 +52,13 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupMindmapBranches() {
+        lifecycleScope.launch {
+            CertifaiRepository.fetchLiveRoadmap()
+        }
+
         // Branch 1: Core Syntax & Structures
         val branch1 = listOf(
-            MindmapNode("m1", "Syntax & Setup", "Variables & I/O", "FREE", "10m", isFree = true),
+            MindmapNode("m1", "Syntax & Setup", "Variables & I/O", "FREE", "100m", isFree = true),
             MindmapNode("m2", "Control Flow", "If/Else & Loops", "3 💎", "15m"),
             MindmapNode("m3", "Data Structures", "Lists, Dicts, Sets", "3 💎", "20m"),
             MindmapNode("m4", "Decorators", "Closures & Wrappers", "10 💎", "20m")

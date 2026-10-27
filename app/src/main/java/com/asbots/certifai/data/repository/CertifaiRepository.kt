@@ -1,13 +1,40 @@
 package com.asbots.certifai.data.repository
 
+import com.asbots.certifai.data.models.ApiNode
 import com.asbots.certifai.data.models.CourseModule
 import com.asbots.certifai.data.models.LessonItem
 import com.asbots.certifai.data.models.NodeStatus
 import com.asbots.certifai.data.models.QuizQuestion
 import com.asbots.certifai.data.models.RoadmapNode
 import com.asbots.certifai.data.models.UserCertificate
+import com.asbots.certifai.data.network.ApiClient
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 object CertifaiRepository {
+
+    private val liveApiNodes = mutableListOf<ApiNode>()
+
+    suspend fun fetchLiveRoadmap(): Result<List<ApiNode>> = withContext(Dispatchers.IO) {
+        try {
+            val response = ApiClient.apiService.getRoadmap()
+            if (response.isSuccessful && response.body()?.status == "success") {
+                val modules = response.body()?.modules ?: emptyList()
+                val allNodes = modules.flatMap { it.nodes ?: emptyList() }
+                if (allNodes.isNotEmpty()) {
+                    liveApiNodes.clear()
+                    liveApiNodes.addAll(allNodes)
+                    Result.success(allNodes)
+                } else {
+                    Result.success(emptyList())
+                }
+            } else {
+                Result.failure(Exception("Failed to load live roadmap"))
+            }
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
 
     // 10-Stage ASBots CertifAI Roadmap Nodes
     private val nodesList = mutableListOf(

@@ -43,7 +43,7 @@ data class LessonItem(
     @SerializedName("id") val id: String,
     @SerializedName("title") val title: String,
     @SerializedName("duration") val duration: String,
-    @SerializedName("type") val type: String, // VIDEO, CODE_SANDBOX, QUIZ, PROJECT
+    @SerializedName("type") val type: String,
     @SerializedName("video_url") val videoUrl: String? = null,
     @SerializedName("code_snippet") val codeSnippet: String? = null,
     @SerializedName("is_completed") var isCompleted: Boolean = false
@@ -68,12 +68,46 @@ data class UserCertificate(
     @SerializedName("as_coins_earned") val asCoinsEarned: Int
 )
 
-data class RoadmapNodesResponse(
+// LIVE API Response Models from https://asbots.com/modules/certifai/api/roadmap.php
+data class CertifaiRoadmapResponse(
     @SerializedName("status") val status: String,
-    @SerializedName("nodes") val nodes: List<RoadmapNode>?
+    @SerializedName("track") val track: TrackInfo?,
+    @SerializedName("modules") val modules: List<ApiModule>?
 )
 
-data class CourseModulesResponse(
-    @SerializedName("status") val status: String,
-    @SerializedName("modules") val modules: List<CourseModule>?
+data class TrackInfo(
+    @SerializedName("id") val id: Int,
+    @SerializedName("slug") val slug: String,
+    @SerializedName("title") val title: String,
+    @SerializedName("subtitle") val subtitle: String?,
+    @SerializedName("description") val description: String?,
+    @SerializedName("estimated_hours") val estimatedHours: Int
+)
+
+data class ApiModule(
+    @SerializedName("module_key") val moduleKey: String,
+    @SerializedName("title") val title: String,
+    @SerializedName("category") val category: String,
+    @SerializedName("theme") val theme: String,
+    @SerializedName("icon") val icon: String,
+    @SerializedName("reward_coins") val rewardCoins: Int,
+    @SerializedName("nodes") val nodes: List<ApiNode>?
+)
+
+data class ApiNode(
+    @SerializedName("id") val id: Int,
+    @SerializedName("node_key") val nodeKey: String,
+    @SerializedName("title") val title: String,
+    @SerializedName("subinfo") val subinfo: String?,
+    @SerializedName("icon") val icon: String?,
+    @SerializedName("estimated_time") val estimatedTime: String?,
+    @SerializedName("node_type") val nodeType: String?,
+    @SerializedName("reward_coins") val rewardCoins: Int,
+    @SerializedName("column_index") val columnIndex: Int,
+    @SerializedName("position") val position: String,
+    @SerializedName("height_variant") val heightVariant: String?,
+    @SerializedName("order_index") val orderIndex: Int,
+    @SerializedName("status") val status: String?,
+    @SerializedName("score") val score: Int,
+    @SerializedName("completed_at") val completedAt: String?
 )

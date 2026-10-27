@@ -20,135 +20,195 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Account &amp; Settings"
+            android:text="My Profile &amp; Settings"
             android:textColor="@color/text_primary_light"
             android:textSize="26sp"
             android:textStyle="bold" />
 
-        <!-- Top Profile Header Card (Matching Web Screenshot) -->
+        <!-- 1. HERO PROFILE CARD (Matching Official Spec) -->
         <androidx.cardview.widget.CardView
-            android:id="@+id/cardProfileHeader"
+            android:id="@+id/cardHero"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             app:cardBackgroundColor="@color/surface_light"
-            app:cardCornerRadius="20dp"
+            app:cardCornerRadius="24dp"
             app:cardElevation="2dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/bg_card_surface"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:padding="20dp">
 
-                <!-- Avatar with Camera Badge Container -->
-                <FrameLayout
-                    android:layout_width="72dp"
-                    android:layout_height="72dp">
-
-                    <com.google.android.material.imageview.ShapeableImageView
-                        android:id="@+id/ivAvatar"
-                        android:layout_width="72dp"
-                        android:layout_height="72dp"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/ic_certifai_shield"
-                        app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Full" />
-
-                    <!-- Camera Overlay Icon -->
-                    <ImageView
-                        android:layout_width="22dp"
-                        android:layout_height="22dp"
-                        android:layout_gravity="bottom|end"
-                        android:background="@drawable/bg_card_surface"
-                        android:contentDescription="Avatar"
-                        android:padding="4dp"
-                        android:src="@android:drawable/ic_menu_camera"
-                        app:tint="@color/electric_blue" />
-
-                </FrameLayout>
-
                 <LinearLayout
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <!-- Avatar with Camera Badge Container (24dp corner radius) -->
+                    <FrameLayout
+                        android:layout_width="72dp"
+                        android:layout_height="72dp">
+
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:id="@+id/ivAvatar"
+                            android:layout_width="72dp"
+                            android:layout_height="72dp"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/ic_certifai_shield"
+                            app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Medium" />
+
+                        <!-- Camera Overlay Button -->
+                        <ImageView
+                            android:id="@+id/btnCameraOverlay"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_gravity="bottom|end"
+                            android:background="@drawable/bg_card_surface"
+                            android:contentDescription="Avatar"
+                            android:elevation="2dp"
+                            android:padding="4dp"
+                            android:src="@android:drawable/ic_menu_camera"
+                            app:tint="@color/electric_blue" />
+
+                    </FrameLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tvUserName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:text="Aamir Aamir"
+                            android:textColor="@color/text_primary_light"
+                            android:textSize="22sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tvUserUsername"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:text="\@digiartaamir"
+                            android:textColor="@color/text_secondary_light"
+                            android:textSize="14sp" />
+
+                        <!-- Status Pills Row -->
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/tvRoleBadge"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="6dp"
+                                android:background="#152563EB"
+                                android:paddingHorizontal="10dp"
+                                android:paddingVertical="3dp"
+                                android:text="USER"
+                                android:textColor="@color/electric_blue"
+                                android:textSize="11sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/tvVerifiedBadge"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="6dp"
+                                android:background="#1510B981"
+                                android:paddingHorizontal="10dp"
+                                android:paddingVertical="3dp"
+                                android:text="✓ Verified"
+                                android:textColor="#10B981"
+                                android:textSize="11sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/tvJoinedDateBadge"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="#1264748B"
+                                android:paddingHorizontal="10dp"
+                                android:paddingVertical="3dp"
+                                android:text="Joined Mar 2026"
+                                android:textColor="@color/text_secondary_light"
+                                android:textSize="11sp" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- Live Stats Strip -->
+                <LinearLayout
+                    android:id="@+id/llStatsStrip"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/tvUserName"
-                        android:layout_width="wrap_content"
+                        android:id="@+id/tvCoinsStat"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:ellipsize="end"
-                        android:maxLines="1"
-                        android:text="Aamir Aamir"
-                        android:textColor="@color/text_primary_light"
-                        android:textSize="22sp"
+                        android:layout_marginEnd="6dp"
+                        android:layout_weight="1"
+                        android:background="#12FBBF24"
+                        android:paddingHorizontal="10dp"
+                        android:paddingVertical="8dp"
+                        android:text="💎 150 ASCoins"
+                        android:textColor="@color/gold_badge"
+                        android:textSize="12sp"
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/tvUserUsername"
-                        android:layout_width="wrap_content"
+                        android:id="@+id/tvNodesStat"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
-                        android:text="\@digiartaamir"
-                        android:textColor="@color/text_secondary_light"
-                        android:textSize="13sp" />
+                        android:layout_marginHorizontal="3dp"
+                        android:layout_weight="1"
+                        android:background="#122563EB"
+                        android:paddingHorizontal="10dp"
+                        android:paddingVertical="8dp"
+                        android:text="🎯 8/36 Topics"
+                        android:textColor="@color/electric_blue"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
 
-                    <!-- Badges Pill Row -->
-                    <LinearLayout
-                        android:layout_width="wrap_content"
+                    <TextView
+                        android:id="@+id/tvBadgesStat"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/tvRoleBadge"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="6dp"
-                            android:background="#152563EB"
-                            android:paddingHorizontal="10dp"
-                            android:paddingVertical="3dp"
-                            android:text="USER"
-                            android:textColor="@color/electric_blue"
-                            android:textSize="11sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/tvVerifiedBadge"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="6dp"
-                            android:background="#1510B981"
-                            android:paddingHorizontal="10dp"
-                            android:paddingVertical="3dp"
-                            android:text="✓ VERIFIED"
-                            android:textColor="#10B981"
-                            android:textSize="11sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/tvJoinedDateBadge"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:background="#1264748B"
-                            android:paddingHorizontal="10dp"
-                            android:paddingVertical="3dp"
-                            android:text="Joined Mar 2026"
-                            android:textColor="@color/text_secondary_light"
-                            android:textSize="11sp" />
-
-                    </LinearLayout>
+                        android:layout_marginStart="6dp"
+                        android:layout_weight="1"
+                        android:background="#1210B981"
+                        android:paddingHorizontal="10dp"
+                        android:paddingVertical="8dp"
+                        android:text="🏆 2 Badges"
+                        android:textColor="#10B981"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
 
                 </LinearLayout>
 
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
-        <!-- Sub-Tabs Selector Bar (Matching Web Screenshot) -->
+        <!-- 2. SEGMENTED SUB-TABS SELECTOR -->
         <HorizontalScrollView
             android:id="@+id/hsvSubTabs"
             android:layout_width="match_parent"
@@ -188,22 +248,10 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/tabSecurity"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:background="@drawable/bg_chip_unselected"
-                    android:paddingHorizontal="16dp"
-                    android:paddingVertical="10dp"
-                    android:text="🛡️ Security"
-                    android:textColor="@color/text_secondary_light"
-                    android:textSize="13sp"
-                    android:textStyle="bold" />
-
-                <TextView
                     android:id="@+id/tabNotifications"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
                     android:background="@drawable/bg_chip_unselected"
                     android:paddingHorizontal="16dp"
                     android:paddingVertical="10dp"
@@ -212,10 +260,22 @@
                     android:textSize="13sp"
                     android:textStyle="bold" />
 
+                <TextView
+                    android:id="@+id/tabSecurity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_chip_unselected"
+                    android:paddingHorizontal="16dp"
+                    android:paddingVertical="10dp"
+                    android:text="🛡️ Security"
+                    android:textColor="@color/text_secondary_light"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
             </LinearLayout>
         </HorizontalScrollView>
 
-        <!-- Sub-Tab Content Panel Container -->
+        <!-- 3. SUB-TAB CONTENT PANEL -->
         <androidx.cardview.widget.CardView
             android:id="@+id/cardSubTabContent"
             android:layout_width="match_parent"
@@ -232,7 +292,7 @@
                 android:orientation="vertical"
                 android:padding="20dp">
 
-                <!-- 1. PERSONAL INFO PANEL -->
+                <!-- TAB 1: PERSONAL INFO -->
                 <LinearLayout
                     android:id="@+id/panelPersonalInfo"
                     android:layout_width="match_parent"
@@ -243,41 +303,168 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="👤 Personal Details"
+                        android:text="Personal Details"
                         android:textColor="@color/text_primary_light"
                         android:textSize="18sp"
                         android:textStyle="bold" />
 
+                    <!-- Full Name -->
                     <TextView
-                        android:id="@+id/tvDetailEmail"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
-                        android:text="Email: aamir@asbots.com"
+                        android:text="Full Name"
+                        android:textColor="@color/text_secondary_light"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/etFullName"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:layout_marginTop="4dp"
+                        android:autofillHints="name"
+                        android:background="@drawable/bg_card_surface"
+                        android:hint="Full Name"
+                        android:inputType="textPersonName"
+                        android:paddingHorizontal="14dp"
+                        android:textColor="@color/text_primary_light"
+                        android:textSize="14sp" />
+
+                    <!-- Username -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:text="Username"
+                        android:textColor="@color/text_secondary_light"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/etUsername"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:layout_marginTop="4dp"
+                        android:autofillHints="username"
+                        android:background="@drawable/bg_card_surface"
+                        android:hint="Username (@digiartaamir)"
+                        android:inputType="text"
+                        android:paddingHorizontal="14dp"
+                        android:textColor="@color/text_primary_light"
+                        android:textSize="14sp" />
+
+                    <!-- Read-Only Email -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:text="Email Address (Read Only)"
+                        android:textColor="@color/text_secondary_light"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/etEmail"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:layout_marginTop="4dp"
+                        android:autofillHints="emailAddress"
+                        android:background="@drawable/bg_card_surface"
+                        android:enabled="false"
+                        android:hint="aamir@asbots.com"
+                        android:inputType="textEmailAddress"
+                        android:paddingHorizontal="14dp"
                         android:textColor="@color/text_secondary_light"
                         android:textSize="14sp" />
 
+                    <!-- Phone -->
                     <TextView
-                        android:id="@+id/tvDetailUsername"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
-                        android:text="Username: digiartaamir"
+                        android:layout_marginTop="12dp"
+                        android:text="Phone Number"
                         android:textColor="@color/text_secondary_light"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/etPhone"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:layout_marginTop="4dp"
+                        android:autofillHints="phone"
+                        android:background="@drawable/bg_card_surface"
+                        android:hint="+1 (555) 000-0000"
+                        android:inputType="phone"
+                        android:paddingHorizontal="14dp"
+                        android:textColor="@color/text_primary_light"
                         android:textSize="14sp" />
 
+                    <!-- Bio -->
                     <TextView
-                        android:id="@+id/tvDetailRole"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
-                        android:text="Role: Learner / User"
+                        android:layout_marginTop="12dp"
+                        android:text="Bio"
                         android:textColor="@color/text_secondary_light"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/etBio"
+                        android:layout_width="match_parent"
+                        android:layout_height="80dp"
+                        android:layout_marginTop="4dp"
+                        android:autofillHints="none"
+                        android:background="@drawable/bg_card_surface"
+                        android:gravity="top|start"
+                        android:hint="Tell us about your AI and Robotics background..."
+                        android:inputType="textMultiLine"
+                        android:padding="12dp"
+                        android:textColor="@color/text_primary_light"
                         android:textSize="14sp" />
+
+                    <!-- Location -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:text="Location"
+                        android:textColor="@color/text_secondary_light"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/etLocation"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:layout_marginTop="4dp"
+                        android:autofillHints="postalAddress"
+                        android:background="@drawable/bg_card_surface"
+                        android:hint="San Francisco, USA"
+                        android:inputType="text"
+                        android:paddingHorizontal="14dp"
+                        android:textColor="@color/text_primary_light"
+                        android:textSize="14sp" />
+
+                    <!-- Save Profile Button -->
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnSaveProfile"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="20dp"
+                        android:backgroundTint="@color/electric_blue"
+                        android:text="Save Changes"
+                        android:textAllCaps="false"
+                        android:textColor="#FFFFFF"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        app:cornerRadius="12dp" />
 
                 </LinearLayout>
 
-                <!-- 2. APPEARANCE PANEL -->
+                <!-- TAB 2: APPEARANCE -->
                 <LinearLayout
                     android:id="@+id/panelAppearance"
                     android:layout_width="match_parent"
@@ -288,7 +475,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="🎨 Appearance Settings"
+                        android:text="Theme Selection"
                         android:textColor="@color/text_primary_light"
                         android:textSize="18sp"
                         android:textStyle="bold" />
@@ -303,39 +490,13 @@
                         android:textColor="@color/text_primary_light"
                         android:textSize="15sp" />
 
-                </LinearLayout>
-
-                <!-- 3. SECURITY PANEL -->
-                <LinearLayout
-                    android:id="@+id/panelSecurity"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:visibility="gone">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="🛡️ Account Security"
-                        android:textColor="@color/text_primary_light"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="Google One-Tap Authentication Active"
-                        android:textColor="@color/text_secondary_light"
-                        android:textSize="13sp" />
-
-                    <Button
-                        android:id="@+id/btnSignOut"
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnApplyTheme"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:layout_marginTop="20dp"
-                        android:backgroundTint="#DC2626"
-                        android:text="Sign Out Account"
+                        android:backgroundTint="@color/electric_blue"
+                        android:text="Apply Theme"
                         android:textAllCaps="false"
                         android:textColor="#FFFFFF"
                         android:textSize="15sp"
@@ -344,7 +505,7 @@
 
                 </LinearLayout>
 
-                <!-- 4. NOTIFICATIONS PANEL (Matching Web Screenshot) -->
+                <!-- TAB 3: NOTIFICATIONS (Matching Web Screenshot) -->
                 <LinearLayout
                     android:id="@+id/panelNotifications"
                     android:layout_width="match_parent"
@@ -355,7 +516,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="🔔 Notification Settings"
+                        android:text="Notification Settings"
                         android:textColor="@color/text_primary_light"
                         android:textSize="18sp"
                         android:textStyle="bold" />
@@ -439,6 +600,59 @@
                             android:layout_height="wrap_content"
                             android:checked="true" />
                     </LinearLayout>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnSaveNotifications"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="20dp"
+                        android:backgroundTint="@color/electric_blue"
+                        android:text="Save Notification Settings"
+                        android:textAllCaps="false"
+                        android:textColor="#FFFFFF"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        app:cornerRadius="12dp" />
+
+                </LinearLayout>
+
+                <!-- TAB 4: SECURITY -->
+                <LinearLayout
+                    android:id="@+id/panelSecurity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Account Security"
+                        android:textColor="@color/text_primary_light"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="Google One-Tap Authentication Active"
+                        android:textColor="@color/text_secondary_light"
+                        android:textSize="13sp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnSignOut"
+                        style="@style/Widget.Material3.Button.OutlinedButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="24dp"
+                        android:text="Sign Out Account"
+                        android:textAllCaps="false"
+                        android:textColor="#DC2626"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        app:cornerRadius="12dp"
+                        app:strokeColor="#DC2626" />
 
                 </LinearLayout>
 
