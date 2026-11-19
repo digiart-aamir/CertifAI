@@ -1,6 +1,8 @@
 package com.asbots.certifai
 
 import android.graphics.Color
+import android.content.res.Configuration
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
@@ -67,6 +69,9 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val windowBgColor = ContextCompat.getColor(this, R.color.white)
+        window.setBackgroundDrawable(ColorDrawable(windowBgColor))
+
         enableEdgeToEdge(
             statusBarStyle = SystemBarStyle.light(
                 ContextCompat.getColor(this, R.color.white),
@@ -75,11 +80,28 @@ class MainActivity : AppCompatActivity() {
         )
 
         @Suppress("DEPRECATION")
-        window.statusBarColor = ContextCompat.getColor(this, R.color.white)
+        window.statusBarColor = windowBgColor
         WindowCompat.getInsetsController(window, window.decorView).isAppearanceLightStatusBars = true
 
+        // 1. Show custom splash layout (activity_splash.xml) first
+        setContentView(R.layout.activity_splash)
+
+        // 2. Wait 3 seconds, then initialize main UI and navigation
+        android.os.Handler(android.os.Looper.getMainLooper()).postDelayed({
+            if (!isFinishing && !isDestroyed) {
+                initMainUI(windowBgColor)
+            }
+        }, 3000L)
+    }
+
+    private fun initMainUI(windowBgColor: Int) {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        binding.drawerLayout.setBackgroundColor(windowBgColor)
+        binding.main.setBackgroundColor(windowBgColor)
+        val panelBgColor = ContextCompat.getColor(this, R.color.white)
+        binding.llDrawerPanel.setBackgroundColor(panelBgColor)
 
         authRepository = AuthRepository(this)
 
@@ -92,7 +114,7 @@ class MainActivity : AppCompatActivity() {
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
-
+//
         setupExyteComposeTopNav()
         setupNavigationDrawer()
         checkInitialSession()
@@ -252,6 +274,7 @@ class MainActivity : AppCompatActivity() {
         llDrawerProfileCard = drawerPanel.findViewById(R.id.llDrawerProfileCard)
 
         llDrawerProfileCard?.setOnClickListener {
+            navController.navigate(R.id.profileFragment)
             binding.drawerLayout.closeDrawer(GravityCompat.START)
             if (authRepository.isUserLoggedIn()) {
                 navController.navigate(R.id.profileFragment)

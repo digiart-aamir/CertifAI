@@ -12,10 +12,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp"
+        android:paddingHorizontal="16dp"
+        android:paddingTop="16dp"
         android:paddingBottom="60dp">
 
-        <!-- Header Row: Brand Title + ASCoins Tag -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -54,7 +54,7 @@
 
         </LinearLayout>
 
-        <!-- Root Node Card (Matching Web UI "Python FOUNDATIONS") -->
+        <!-- Root Node Card -->
         <androidx.cardview.widget.CardView
             android:id="@+id/cardRootNode"
             android:layout_width="match_parent"
@@ -121,64 +121,14 @@
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
-        <!-- Branch 1 Header & Nodes Carousel -->
-        <TextView
+        <!-- Journey path: branch banners + zigzag nodes (drawn by custom view) -->
+        <com.asbots.certifai.ui.roadmap.RoadmapPathView
+            android:id="@+id/roadmapView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="Core Syntax &amp; Structures Branch"
-            android:textColor="@color/text_primary_light"
-            android:textSize="16sp"
-            android:textStyle="bold" />
+            android:layout_marginTop="16dp" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvBranch1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:clipToPadding="false"
-            android:orientation="horizontal"
-            tools:listitem="@layout/item_mindmap_node" />
-
-        <!-- Branch 2 Header & Nodes Carousel -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="Functions &amp; File Engineering Branch"
-            android:textColor="@color/text_primary_light"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvBranch2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:clipToPadding="false"
-            android:orientation="horizontal"
-            tools:listitem="@layout/item_mindmap_node" />
-
-        <!-- Branch 3 Header & Nodes Carousel -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="Advanced Concurrency &amp; APIs Branch"
-            android:textColor="@color/text_primary_light"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvBranch3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:clipToPadding="false"
-            android:orientation="horizontal"
-            tools:listitem="@layout/item_mindmap_node" />
-
-        <!-- Bottom Floating Dock Pills (Matching Web UI Screenshot) -->
+        <!-- Bottom Dock Pills -->
         <LinearLayout
             android:id="@+id/llMindmapBottomDock"
             android:layout_width="wrap_content"

@@ -72,6 +72,9 @@ dependencies {
     implementation("androidx.compose.runtime:runtime")
     implementation("com.exyte:animated-navigation-bar:1.0.0")
 
+    // Lottie Animation
+    implementation("com.airbnb.android:lottie:6.7.1")
+
     implementation("com.github.mindinventory:minavdrawer:1.2.2")
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.espresso.core)

@@ -1,5 +1,6 @@
 package com.asbots.certifai.ui
 
+import android.animation.Animator
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -15,6 +16,8 @@ class SplashFragment : Fragment() {
 
     private var _binding: FragmentSplashBinding? = null
     private val binding get() = _binding!!
+    private val splashHandler = Handler(Looper.getMainLooper())
+    private var hasNavigated = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -26,15 +29,34 @@ class SplashFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Handler(Looper.getMainLooper()).postDelayed({
-            if (isAdded) {
-                findNavController().navigate(R.id.onboardingFragment)
+
+        binding.lottieSplash.addAnimatorListener(object : Animator.AnimatorListener {
+            override fun onAnimationStart(animation: Animator) {}
+            override fun onAnimationEnd(animation: Animator) {
+                navigateToNext()
             }
-        }, 1500)
+            override fun onAnimationCancel(animation: Animator) {
+                navigateToNext()
+            }
+            override fun onAnimationRepeat(animation: Animator) {}
+        })
+
+        splashHandler.postDelayed({
+            navigateToNext()
+        }, 3000L)
+    }
+
+    private fun navigateToNext() {
+        if (!hasNavigated && isAdded) {
+            hasNavigated = true
+            splashHandler.removeCallbacksAndMessages(null)
+            findNavController().navigate(R.id.onboardingFragment)
+        }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
+        splashHandler.removeCallbacksAndMessages(null)
         _binding = null
     }
 }

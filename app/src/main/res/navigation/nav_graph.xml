@@ -68,7 +68,16 @@
         <action
             android:id="@+id/action_homeFragment_to_courseDetailFragment"
             app:destination="@id/courseDetailFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_roadmapGuideFragment"
+            app:destination="@id/roadmapGuideFragment" />
     </fragment>
+
+    <fragment
+        android:id="@+id/roadmapGuideFragment"
+        android:name="com.asbots.certifai.ui.RoadmapGuideFragment"
+        android:label="AI Roadmap Guide"
+        tools:layout="@layout/fragment_roadmap_guide" />
 
     <fragment
         android:id="@+id/learnFragment"
@@ -128,7 +137,7 @@
     <fragment
         android:id="@+id/coursePlayerFragment"
         android:name="com.asbots.certifai.ui.CoursePlayerFragment"
-        android:label="Course Player"
+        android:label="Course Detail"
         tools:layout="@layout/fragment_course_player">
         <argument
             android:name="courseId"
@@ -141,6 +150,10 @@
         android:name="com.asbots.certifai.ui.QuizFragment"
         android:label="Quiz"
         tools:layout="@layout/fragment_quiz">
+        <argument
+            android:name="courseId"
+            app:argType="string"
+            android:defaultValue="course_1" />
         <argument
             android:name="courseId"
             app:argType="string"

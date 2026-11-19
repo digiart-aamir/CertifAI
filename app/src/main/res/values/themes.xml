@@ -6,6 +6,7 @@
         <item name="android:statusBarColor">#FFFFFF</item>
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:windowBackground">#FFFFFF</item>
+        <item name="android:colorBackground">#FFFFFF</item>
     </style>
 
     <style name="Theme.CertifAI" parent="Base.Theme.CertifAI" />

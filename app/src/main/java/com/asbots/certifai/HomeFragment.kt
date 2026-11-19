@@ -4,17 +4,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.asbots.certifai.data.models.MindmapNode
 import com.asbots.certifai.data.repository.AuthRepository
 import com.asbots.certifai.data.repository.CertifaiRepository
 import com.asbots.certifai.databinding.FragmentHomeBinding
-import com.asbots.certifai.ui.roadmap.MindmapNodeAdapter
+import com.asbots.certifai.ui.roadmap.RoadmapPathView
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+
+import com.asbots.certifai.data.models.NodeStatus
 
 class HomeFragment : Fragment() {
 
@@ -36,85 +37,81 @@ class HomeFragment : Fragment() {
         authRepository = AuthRepository(requireContext())
 
         setupHeader()
-        setupMindmapBranches()
+        setupRoadmap()
         setupDockListeners()
     }
 
     private fun setupHeader() {
         if (authRepository.isUserLoggedIn()) {
-            lifecycleScope.launch {
-                authRepository.fetchCurrentProfile()
-                    .onSuccess { user ->
-                        binding.tvHeaderAsCoins.text = "🪙 ${user.coinsBalance} ASCoins"
-                    }
+            lifecycleScope.launch(Dispatchers.IO) {
+                try {
+                    authRepository.fetchCurrentProfile()
+                        .onSuccess { user ->
+                            withContext(Dispatchers.Main) {
+                                _binding?.tvHeaderAsCoins?.text = "🪙 ${user.coinsBalance} ASCoins"
+                            }
+                        }
+                } catch (_: Exception) {
+                }
             }
         }
     }
 
-    private fun setupMindmapBranches() {
-        lifecycleScope.launch {
-            CertifaiRepository.fetchLiveRoadmap()
+    private fun setupRoadmap() {
+        lifecycleScope.launch(Dispatchers.IO) {
+            try {
+                CertifaiRepository.fetchLiveRoadmap()
+            } catch (_: Exception) {
+            }
         }
 
-        // Branch 1: Core Syntax & Structures
-        val branch1 = listOf(
-            MindmapNode("m1", "Syntax & Setup", "Variables & I/O", "FREE", "100m", isFree = true),
-            MindmapNode("m2", "Control Flow", "If/Else & Loops", "3 💎", "15m"),
-            MindmapNode("m3", "Data Structures", "Lists, Dicts, Sets", "3 💎", "20m"),
-            MindmapNode("m4", "Decorators", "Closures & Wrappers", "10 💎", "20m")
+        fun n(
+            id: String,
+            title: String,
+            subtitle: String,
+            badge: String = "",
+            duration: String = "15m",
+            free: Boolean = false,
+            status: NodeStatus = if (free) NodeStatus.COMPLETED else NodeStatus.LOCKED
+        ) = RoadmapPathView.PathNode(id, title, subtitle, badge, duration, free, status)
+
+        val branches = listOf(
+            RoadmapPathView.Branch(
+                "Your learning path",
+                listOf(
+                    n("m1", "Python", "Completed", "FREE", "10m", free = true, status = NodeStatus.COMPLETED),
+                    n("m2", "Data and stats", "Completed", "FREE", "15m", free = true, status = NodeStatus.COMPLETED),
+                    n("m3", "Deep learning", "You are here", "You are here", "20m", free = true, status = NodeStatus.IN_PROGRESS),
+                    n("m4", "LLMs and RAG", "Locked", "3 💎", "20m", free = false, status = NodeStatus.LOCKED),
+                    n("m5", "Certification", "Locked", "10 💎", "25m", free = false, status = NodeStatus.LOCKED)
+                )
+            ),
+            RoadmapPathView.Branch(
+                "Advanced AI & Autonomous Agents",
+                listOf(
+                    n("m6", "Prompt Engineering", "Locked", "3 💎", "15m", status = NodeStatus.LOCKED),
+                    n("m7", "Multi-Agent Systems", "Locked", "10 💎", "25m", status = NodeStatus.LOCKED),
+                    n("m8", "Model Quantization", "Locked", "10 💎", "30m", status = NodeStatus.LOCKED)
+                )
+            )
         )
 
-        // Branch 2: Functions & File Engineering
-        val branch2 = listOf(
-            MindmapNode("m5", "Data Types", "Numbers & Str", "FREE", "10m", isFree = true),
-            MindmapNode("m6", "Functions", "Args & Return", "3 💎", "15m"),
-            MindmapNode("m7", "OOP & Classes", "Inheritance & MRO", "3 💎", "25m"),
-            MindmapNode("m8", "Modules", "Imports & Pip", "3 💎", "15m"),
-            MindmapNode("m9", "File Handling", "With Context, CSV", "3 💎", "15m"),
-            MindmapNode("m10", "Error Handling", "Try/Except Blocks", "3 💎", "15m")
-        )
-
-        // Branch 3: Advanced Concurrency & APIs
-        val branch3 = listOf(
-            MindmapNode("m11", "Regex", "Pattern Matching", "3 💎", "20m"),
-            MindmapNode("m12", "Threading", "GIL & Concurrency", "10 💎", "25m"),
-            MindmapNode("m13", "Memory", "Ref Counts & GC", "10 💎", "20m"),
-            MindmapNode("m14", "Virtual Envs", "Venv & Packages", "10 💎", "15m"),
-            MindmapNode("m15", "APIs & Requests", "HTTP & REST JSON", "10 💎", "20m"),
-            MindmapNode("m16", "CLI Tools", "Argparse & Sys", "10 💎", "20m"),
-            MindmapNode("m17", "Type Hinting", "Typing & Pydantic", "10 💎", "15m"),
-            MindmapNode("m18", "Databases", "SQLite & SQL", "10 💎", "25m")
-        )
-
-        val adapter1 = MindmapNodeAdapter(branch1) { node -> openNodeDetail(node) }
-        val adapter2 = MindmapNodeAdapter(branch2) { node -> openNodeDetail(node) }
-        val adapter3 = MindmapNodeAdapter(branch3) { node -> openNodeDetail(node) }
-
-        binding.rvBranch1.apply {
-            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-            adapter = adapter1
-        }
-
-        binding.rvBranch2.apply {
-            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-            adapter = adapter2
-        }
-
-        binding.rvBranch3.apply {
-            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-            adapter = adapter3
-        }
+        binding.roadmapView.setBranches(branches)
+        binding.roadmapView.onNodeClick = { node -> openNodeDetail(node) }
     }
 
-    private fun openNodeDetail(node: MindmapNode) {
-        val bundle = Bundle().apply { putString("courseId", "course_1") }
+    private fun openNodeDetail(node: RoadmapPathView.PathNode) {
+        val bundle = Bundle().apply {
+            putString("courseId", "course_1")
+            putString("nodeId", node.id)
+        }
         findNavController().navigate(R.id.courseDetailFragment, bundle)
     }
 
     private fun setupDockListeners() {
         binding.cardRootNode.setOnClickListener {
             val bundle = Bundle().apply { putString("courseId", "course_1") }
-            findNavController().navigate(R.id.courseDetailFragment, bundle)
+            findNavController().navigate(R.id.action_homeFragment_to_courseDetailFragment, bundle)
         }
 
         binding.btnDockStats.setOnClickListener {
