@@ -1,5 +1,8 @@
 package com.asbots.certifai.data.network
 
+import android.content.Context
+import com.asbots.certifai.data.storage.TokenManager
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.ResponseBody
 import okhttp3.logging.HttpLoggingInterceptor
@@ -12,12 +15,34 @@ import java.util.concurrent.TimeUnit
 object ApiClient {
 
     private const val BASE_URL = "https://asbots.com/"
+    private var tokenManager: TokenManager? = null
+
+    fun init(context: Context) {
+        if (tokenManager == null) {
+            tokenManager = TokenManager(context.applicationContext)
+        }
+    }
+
+    private val authInterceptor = Interceptor { chain ->
+        val original = chain.request()
+        val token = tokenManager?.getAuthToken()
+
+        val requestBuilder = original.newBuilder()
+            .header("Accept", "application/json")
+
+        if (!token.isNullOrBlank() && original.header("Authorization") == null) {
+            requestBuilder.header("Authorization", "Bearer $token")
+        }
+
+        chain.proceed(requestBuilder.build())
+    }
 
     private val loggingInterceptor = HttpLoggingInterceptor().apply {
         level = HttpLoggingInterceptor.Level.BODY
     }
 
     private val okHttpClient = OkHttpClient.Builder()
+        .addInterceptor(authInterceptor)
         .addInterceptor(loggingInterceptor)
         .connectTimeout(15, TimeUnit.SECONDS)
         .readTimeout(15, TimeUnit.SECONDS)

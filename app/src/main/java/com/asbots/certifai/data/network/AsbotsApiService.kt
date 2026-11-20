@@ -15,31 +15,31 @@ import retrofit2.http.POST
 
 interface AsbotsApiService {
 
-    @POST("modules/users/controllers/AuthController?action=google_signin")
+    @POST("modules/users/api/google_auth.php")
     suspend fun signInWithGoogle(
         @Body request: GoogleSignInRequest
     ): Response<AuthResponse>
 
-    @GET("modules/users/controllers/AuthController?action=profile")
+    @GET("modules/users/api/google_auth.php")
     suspend fun getProfile(
-        @Header("Authorization") bearerToken: String
+        @Header("Authorization") bearerToken: String? = null
     ): Response<ProfileResponse>
 
-    @POST("modules/users/controllers/AuthController?action=update_profile")
+    @POST("modules/users/api/google_auth.php")
     suspend fun updateProfile(
-        @Header("Authorization") bearerToken: String,
+        @Header("Authorization") bearerToken: String? = null,
         @Body request: UpdateProfileRequest
     ): Response<ProfileResponse>
 
-    @POST("modules/users/controllers/AuthController?action=update_settings")
+    @POST("modules/users/api/google_auth.php")
     suspend fun updateSettings(
-        @Header("Authorization") bearerToken: String,
+        @Header("Authorization") bearerToken: String? = null,
         @Body request: UpdateSettingsRequest
     ): Response<ProfileResponse>
 
-    @POST("modules/users/controllers/AuthController?action=logout")
+    @POST("modules/users/api/google_auth.php")
     suspend fun signOut(
-        @Header("Authorization") bearerToken: String,
+        @Header("Authorization") bearerToken: String? = null,
         @Body request: SignOutRequest = SignOutRequest()
     ): Response<AuthResponse>
 

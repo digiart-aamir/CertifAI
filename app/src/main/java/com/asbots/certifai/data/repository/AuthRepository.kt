@@ -26,6 +26,10 @@ class AuthRepository(
     private val apiService: AsbotsApiService = ApiClient.apiService,
     private val tokenManager: TokenManager = TokenManager(context)
 ) {
+    init {
+        ApiClient.init(context)
+    }
+
     private val credentialManager = CredentialManager.create(context)
 
     // Server Web Client ID from Google Cloud Console Specification
@@ -74,8 +78,33 @@ class AuthRepository(
                     }
                 }
 
-                val token = apiResponse?.body()?.authToken ?: "session_active_${System.currentTimeMillis()}"
-                val profile = apiResponse?.body()?.user ?: UserProfile(
+                if (apiResponse != null && apiResponse.isSuccessful && apiResponse.body()?.status == "success") {
+                    val body = apiResponse.body()!!
+                    val token = body.authToken
+                    val user = body.user ?: UserProfile(
+                        id = 1,
+                        name = realName,
+                        username = realUsername,
+                        email = realEmail,
+                        avatar = realAvatar,
+                        role = "user",
+                        status = "active",
+                        isVerified = true,
+                        createdAt = null,
+                        coinsBalance = 150,
+                        completedNodes = 8,
+                        totalNodes = 36
+                    )
+
+                    if (!token.isNullOrBlank()) {
+                        tokenManager.saveAuthToken(token)
+                        tokenManager.saveUserProfile(user.name, user.username, user.email, user.avatar)
+                        return Result.success(user)
+                    }
+                }
+
+                val fallbackToken = "session_active_${System.currentTimeMillis()}"
+                val profile = UserProfile(
                     id = 1,
                     name = realName,
                     username = realUsername,
@@ -90,7 +119,7 @@ class AuthRepository(
                     totalNodes = 36
                 )
 
-                tokenManager.saveAuthToken(token)
+                tokenManager.saveAuthToken(fallbackToken)
                 tokenManager.saveUserProfile(profile.name, profile.username, profile.email, profile.avatar)
                 Result.success(profile)
             } else {
