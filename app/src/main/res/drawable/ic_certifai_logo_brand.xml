@@ -2,12 +2,12 @@
     xmlns:aapt="http://schemas.android.com/aapt"
     android:width="180dp"
     android:height="50dp"
-    android:viewportWidth="1320"
-    android:viewportHeight="370">
+    android:viewportWidth="1450"
+    android:viewportHeight="380">
 
     <group
-        android:translateX="-140"
-        android:translateY="-362">
+        android:translateX="-120"
+        android:translateY="-360">
 
         <!-- Shield icon + "AI" letters (Gradient Blue to Cyan) -->
         <path

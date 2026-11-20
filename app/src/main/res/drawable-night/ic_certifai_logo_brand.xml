@@ -1,12 +1,12 @@
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:aapt="http://schemas.android.com/aapt"
     android:width="180dp"
-    android:height="35dp"
-    android:viewportWidth="1320"
-    android:viewportHeight="260">
+    android:height="50dp"
+    android:viewportWidth="1450"
+    android:viewportHeight="380">
 
     <group
-        android:translateX="-140"
+        android:translateX="-120"
         android:translateY="-360">
 
         <!-- Shield icon + "AI" letters (Gradient Blue to Cyan) -->
