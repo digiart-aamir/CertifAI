@@ -60,7 +60,7 @@ class HomeFragment : Fragment() {
     private fun setupRoadmap() {
         lifecycleScope.launch(Dispatchers.IO) {
             try {
-                CertifaiRepository.fetchLiveRoadmap()
+                CertifaiRepository.fetchLiveRoadmap(authRepository.getAuthToken())
             } catch (_: Exception) {
             }
         }

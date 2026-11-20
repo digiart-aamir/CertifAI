@@ -53,7 +53,7 @@ class HomeFragment : Fragment() {
 
     private fun setupMindmapBranches() {
         lifecycleScope.launch {
-            CertifaiRepository.fetchLiveRoadmap()
+            CertifaiRepository.fetchLiveRoadmap(authRepository.getAuthToken())
         }
 
         // Branch 1: Core Syntax & Structures

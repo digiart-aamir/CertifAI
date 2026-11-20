@@ -15,9 +15,10 @@ object CertifaiRepository {
 
     private val liveApiNodes = mutableListOf<ApiNode>()
 
-    suspend fun fetchLiveRoadmap(): Result<List<ApiNode>> = withContext(Dispatchers.IO) {
+    suspend fun fetchLiveRoadmap(authToken: String? = null): Result<List<ApiNode>> = withContext(Dispatchers.IO) {
         try {
-            val response = ApiClient.apiService.getRoadmap()
+            val bearerHeader = authToken?.takeIf { it.isNotBlank() }?.let { "Bearer $it" }
+            val response = ApiClient.apiService.getRoadmap(bearerToken = bearerHeader)
             if (response.isSuccessful && response.body()?.status == "success") {
                 val modules = response.body()?.modules ?: emptyList()
                 val allNodes = modules.flatMap { it.nodes ?: emptyList() }

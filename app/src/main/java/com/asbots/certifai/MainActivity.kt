@@ -83,18 +83,6 @@ class MainActivity : AppCompatActivity() {
         window.statusBarColor = windowBgColor
         WindowCompat.getInsetsController(window, window.decorView).isAppearanceLightStatusBars = true
 
-        // 1. Show custom splash layout (activity_splash.xml) first
-        setContentView(R.layout.activity_splash)
-
-        // 2. Wait 3 seconds, then initialize main UI and navigation
-        android.os.Handler(android.os.Looper.getMainLooper()).postDelayed({
-            if (!isFinishing && !isDestroyed) {
-                initMainUI(windowBgColor)
-            }
-        }, 3000L)
-    }
-
-    private fun initMainUI(windowBgColor: Int) {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -114,15 +102,25 @@ class MainActivity : AppCompatActivity() {
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
-//
+
+        val showOnboarding = intent.getBooleanExtra("SHOW_ONBOARDING", !authRepository.isUserLoggedIn())
+        val navGraph = navController.navInflater.inflate(R.navigation.nav_graph)
+
+        if (showOnboarding && !authRepository.isUserLoggedIn()) {
+            navGraph.setStartDestination(R.id.onboardingFragment)
+        } else {
+            navGraph.setStartDestination(R.id.homeFragment)
+        }
+        navController.graph = navGraph
+
         setupExyteComposeTopNav()
         setupNavigationDrawer()
         checkInitialSession()
     }
 
     private fun checkInitialSession() {
-        if (!authRepository.isUserLoggedIn()) {
-            navController.navigate(R.id.onboardingFragment)
+        if (authRepository.isUserLoggedIn()) {
+            updateDrawerProfileUI()
         }
     }
 

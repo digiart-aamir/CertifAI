@@ -6,12 +6,6 @@
     app:startDestination="@id/homeFragment">
 
     <fragment
-        android:id="@+id/splashFragment"
-        android:name="com.asbots.certifai.ui.SplashFragment"
-        android:label="Splash"
-        tools:layout="@layout/fragment_splash" />
-
-    <fragment
         android:id="@+id/onboardingFragment"
         android:name="com.asbots.certifai.ui.OnboardingFragment"
         android:label="Onboarding"

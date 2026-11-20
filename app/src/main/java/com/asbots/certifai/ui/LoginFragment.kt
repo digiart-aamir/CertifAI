@@ -31,7 +31,7 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        authRepository = AuthRepository(requireContext())
+        authRepository = AuthRepository(requireActivity())
 
         if (authRepository.isUserLoggedIn()) {
             findNavController().navigate(R.id.profileFragment)
@@ -46,7 +46,7 @@ class LoginFragment : Fragment() {
     private fun performGoogleSignIn() {
         setLoading(isLoading = true)
         lifecycleScope.launch {
-            authRepository.performGoogleSignIn()
+            authRepository.performGoogleSignIn(requireActivity())
                 .onSuccess { user ->
                     setLoading(isLoading = false)
                     Toast.makeText(requireContext(), "Welcome back, ${user.name}!", Toast.LENGTH_SHORT).show()
@@ -55,25 +55,30 @@ class LoginFragment : Fragment() {
                 .onFailure { error ->
                     setLoading(isLoading = false)
                     val errorMsg = error.message ?: ""
-                    if (errorMsg == "NO_CREDENTIALS_ON_DEVICE") {
-                        showNoCredentialsDialog()
-                    } else {
-                        Toast.makeText(requireContext(), errorMsg, Toast.LENGTH_LONG).show()
-                    }
+                    showSignInNoticeDialog(errorMsg)
                 }
         }
     }
 
-    private fun showNoCredentialsDialog() {
+    private fun showSignInNoticeDialog(errorMsg: String) {
+        val message = if (errorMsg == "NO_CREDENTIALS_ON_DEVICE") {
+            "No Google account was found on this device.\n\nWould you like to sign in with a Demo Test Account to preview your profile and ASCoins?"
+        } else {
+            "Google Sign-In notice: $errorMsg\n\nIf running on a test device or emulator, Google OAuth may require adding the app's SHA-1 certificate fingerprint in Google Cloud Console.\n\nWould you like to sign in with a Demo Test Account to preview your profile and ASCoins?"
+        }
+
         AlertDialog.Builder(requireContext())
-            .setTitle("No Google Credentials Available")
-            .setMessage("No Google account was found on this device, or the app's SHA-1 fingerprint needs to be added in Google Cloud Console.\n\nWould you like to sign in with a Demo Test Account to preview the profile and ASCoins features?")
+            .setTitle("Google Sign-In")
+            .setMessage(message)
             .setPositiveButton("Use Demo Account") { _, _ ->
                 val user = authRepository.performDevSignIn()
-                Toast.makeText(requireContext(), "Signed in with Demo Account: ${user.name}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Signed in as ${user.name}", Toast.LENGTH_SHORT).show()
                 findNavController().navigate(R.id.profileFragment)
             }
-            .setNegativeButton("Cancel", null)
+            .setNegativeButton("Try Again") { _, _ ->
+                performGoogleSignIn()
+            }
+            .setNeutralButton("Cancel", null)
             .show()
     }
 

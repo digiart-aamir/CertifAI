@@ -31,23 +31,30 @@ class AuthRepository(
     // Server Web Client ID from Google Cloud Console Specification
     private val webClientId = "834293250211-qeo0r7e2hn4tvspavsd1nlp7ilik8msc.apps.googleusercontent.com"
 
-    suspend fun performGoogleSignIn(): Result<UserProfile> = withContext(Dispatchers.IO) {
-        try {
+    suspend fun performGoogleSignIn(activityContext: Context? = null): Result<UserProfile> {
+        val targetContext = activityContext ?: context
+        return try {
             val googleIdOption = GetGoogleIdOption.Builder()
                 .setFilterByAuthorizedAccounts(false)
                 .setServerClientId(webClientId)
                 .setAutoSelectEnabled(false)
                 .build()
 
-            val signInWithGoogleOption = GetSignInWithGoogleOption.Builder(webClientId)
-                .build()
-
-            val request = GetCredentialRequest.Builder()
+            val primaryRequest = GetCredentialRequest.Builder()
                 .addCredentialOption(googleIdOption)
-                .addCredentialOption(signInWithGoogleOption)
                 .build()
 
-            val result = credentialManager.getCredential(context = context, request = request)
+            val result = withContext(Dispatchers.Main) {
+                try {
+                    credentialManager.getCredential(context = targetContext, request = primaryRequest)
+                } catch (e: Exception) {
+                    val signInWithGoogleOption = GetSignInWithGoogleOption.Builder(webClientId).build()
+                    val fallbackRequest = GetCredentialRequest.Builder()
+                        .addCredentialOption(signInWithGoogleOption)
+                        .build()
+                    credentialManager.getCredential(context = targetContext, request = fallbackRequest)
+                }
+            }
             val credential = result.credential
 
             if (credential is CustomCredential && credential.type == GoogleIdTokenCredential.TYPE_GOOGLE_ID_TOKEN_CREDENTIAL) {
@@ -59,10 +66,12 @@ class AuthRepository(
                 val realUsername = realEmail.substringBefore("@")
                 val realAvatar = googleIdTokenCredential.profilePictureUri?.toString()
 
-                val apiResponse = try {
-                    apiService.signInWithGoogle(GoogleSignInRequest(idToken = idToken))
-                } catch (e: Exception) {
-                    null
+                val apiResponse = withContext(Dispatchers.IO) {
+                    try {
+                        apiService.signInWithGoogle(GoogleSignInRequest(idToken = idToken))
+                    } catch (e: Exception) {
+                        null
+                    }
                 }
 
                 val token = apiResponse?.body()?.authToken ?: "session_active_${System.currentTimeMillis()}"
@@ -88,7 +97,7 @@ class AuthRepository(
                 Result.failure(Exception("Unexpected credential type received."))
             }
         } catch (e: GetCredentialCancellationException) {
-            Result.failure(Exception("Sign-in was cancelled."))
+            Result.failure(Exception("Google Sign-In was cancelled or unavailable on this device."))
         } catch (e: NoCredentialException) {
             Result.failure(Exception("NO_CREDENTIALS_ON_DEVICE"))
         } catch (e: GetCredentialException) {
@@ -285,6 +294,8 @@ class AuthRepository(
     }
 
     fun isUserLoggedIn(): Boolean = tokenManager.hasToken()
+
+    fun getAuthToken(): String? = tokenManager.getAuthToken()
 
     companion object {
         private const val DEV_TOKEN = "demo_dev_token_asbots_2026_test_account"
