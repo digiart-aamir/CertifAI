@@ -31,12 +31,23 @@ class TokenManager(context: Context) {
         return prefs.getString(KEY_AUTH_TOKEN, null)
     }
 
-    fun saveUserProfile(name: String, username: String?, email: String, avatar: String?) {
+    fun saveUserProfile(
+        name: String,
+        username: String?,
+        email: String,
+        avatar: String?,
+        coins: Int = 0,
+        completedNodes: Int = 0,
+        totalNodes: Int = 36
+    ) {
         prefs.edit()
             .putString(KEY_USER_NAME, name)
             .putString(KEY_USER_USERNAME, username)
             .putString(KEY_USER_EMAIL, email)
             .putString(KEY_USER_AVATAR, avatar)
+            .putInt(KEY_USER_COINS, coins)
+            .putInt(KEY_USER_COMPLETED_NODES, completedNodes)
+            .putInt(KEY_USER_TOTAL_NODES, totalNodes)
             .apply()
     }
 
@@ -44,6 +55,9 @@ class TokenManager(context: Context) {
     fun getUserUsername(): String? = prefs.getString(KEY_USER_USERNAME, null)
     fun getUserEmail(): String? = prefs.getString(KEY_USER_EMAIL, null)
     fun getUserAvatar(): String? = prefs.getString(KEY_USER_AVATAR, null)
+    fun getUserCoins(): Int = prefs.getInt(KEY_USER_COINS, 0)
+    fun getUserCompletedNodes(): Int = prefs.getInt(KEY_USER_COMPLETED_NODES, 0)
+    fun getUserTotalNodes(): Int = prefs.getInt(KEY_USER_TOTAL_NODES, 36)
 
     fun clearAuthToken() {
         prefs.edit()
@@ -52,6 +66,9 @@ class TokenManager(context: Context) {
             .remove(KEY_USER_USERNAME)
             .remove(KEY_USER_EMAIL)
             .remove(KEY_USER_AVATAR)
+            .remove(KEY_USER_COINS)
+            .remove(KEY_USER_COMPLETED_NODES)
+            .remove(KEY_USER_TOTAL_NODES)
             .apply()
     }
 
@@ -63,5 +80,8 @@ class TokenManager(context: Context) {
         private const val KEY_USER_USERNAME = "user_username"
         private const val KEY_USER_EMAIL = "user_email"
         private const val KEY_USER_AVATAR = "user_avatar"
+        private const val KEY_USER_COINS = "user_coins"
+        private const val KEY_USER_COMPLETED_NODES = "user_completed_nodes"
+        private const val KEY_USER_TOTAL_NODES = "user_total_nodes"
     }
 }

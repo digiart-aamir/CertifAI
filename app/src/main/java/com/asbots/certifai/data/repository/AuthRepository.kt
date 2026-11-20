@@ -98,7 +98,15 @@ class AuthRepository(
 
                     if (!token.isNullOrBlank()) {
                         tokenManager.saveAuthToken(token)
-                        tokenManager.saveUserProfile(user.name, user.username, user.email, user.avatar)
+                        tokenManager.saveUserProfile(
+                            user.name,
+                            user.username,
+                            user.email,
+                            user.avatar,
+                            user.coinsBalance,
+                            user.completedNodes,
+                            user.effectiveTotalNodes
+                        )
                         return Result.success(user)
                     }
                 }
@@ -120,7 +128,15 @@ class AuthRepository(
                 )
 
                 tokenManager.saveAuthToken(fallbackToken)
-                tokenManager.saveUserProfile(profile.name, profile.username, profile.email, profile.avatar)
+                tokenManager.saveUserProfile(
+                    profile.name,
+                    profile.username,
+                    profile.email,
+                    profile.avatar,
+                    profile.coinsBalance,
+                    profile.completedNodes,
+                    profile.effectiveTotalNodes
+                )
                 Result.success(profile)
             } else {
                 Result.failure(Exception("Unexpected credential type received."))
@@ -154,7 +170,15 @@ class AuthRepository(
             certificatesCount = 1
         )
         tokenManager.saveAuthToken(DEV_TOKEN)
-        tokenManager.saveUserProfile(devProfile.name, devProfile.username, devProfile.email, devProfile.avatar)
+        tokenManager.saveUserProfile(
+            devProfile.name,
+            devProfile.username,
+            devProfile.email,
+            devProfile.avatar,
+            devProfile.coinsBalance,
+            devProfile.completedNodes,
+            devProfile.effectiveTotalNodes
+        )
         return devProfile
     }
 
@@ -166,6 +190,9 @@ class AuthRepository(
         val savedUsername = tokenManager.getUserUsername() ?: "digiartaamir"
         val savedEmail = tokenManager.getUserEmail() ?: "aamir@asbots.com"
         val savedAvatar = tokenManager.getUserAvatar()
+        val savedCoins = tokenManager.getUserCoins()
+        val savedCompletedNodes = tokenManager.getUserCompletedNodes()
+        val savedTotalNodes = tokenManager.getUserTotalNodes()
 
         val localProfile = UserProfile(
             id = 1,
@@ -177,18 +204,26 @@ class AuthRepository(
             status = "active",
             isVerified = true,
             createdAt = "2026-03-01 10:20:00",
-            coinsBalance = 150,
-            completedNodes = 8,
-            totalNodes = 36,
-            badgesCount = 2,
-            certificatesCount = 1
+            coinsBalance = savedCoins,
+            completedNodes = savedCompletedNodes,
+            totalNodes = if (savedTotalNodes > 0) savedTotalNodes else 36,
+            badgesCount = 0,
+            certificatesCount = 0
         )
 
         try {
             val response = apiService.getProfile("Bearer $token")
             if (response.isSuccessful && response.body()?.user != null) {
                 val serverUser = response.body()!!.user!!
-                tokenManager.saveUserProfile(serverUser.name, serverUser.username, serverUser.email, serverUser.avatar)
+                tokenManager.saveUserProfile(
+                    serverUser.name,
+                    serverUser.username,
+                    serverUser.email,
+                    serverUser.avatar,
+                    serverUser.coinsBalance,
+                    serverUser.completedNodes,
+                    serverUser.effectiveTotalNodes
+                )
                 Result.success(serverUser)
             } else {
                 Result.success(localProfile)

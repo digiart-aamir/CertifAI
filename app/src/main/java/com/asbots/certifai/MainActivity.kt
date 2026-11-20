@@ -346,10 +346,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun bindDrawerUser(user: UserProfile) {
+        val totalNodesCount = user.effectiveTotalNodes
         tvDrawerName?.text = user.name
         tvDrawerEmail?.text = user.email
         tvDrawerCoins?.text = "🪙 ${user.coinsBalance} Coins"
-        tvDrawerNodes?.text = "🎯 ${user.completedNodes}/${user.totalNodes} Nodes"
+        tvDrawerNodes?.text = "🎯 ${user.completedNodes}/$totalNodesCount Nodes"
 
         if (!user.avatar.isNullOrBlank()) {
             ivDrawerAvatar?.load(user.avatar) {

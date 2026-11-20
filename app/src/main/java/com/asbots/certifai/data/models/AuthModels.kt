@@ -66,7 +66,11 @@ data class UserProfile(
     @SerializedName("coins_balance") val coinsBalance: Int = 0,
     @SerializedName("completed_nodes") val completedNodes: Int = 0,
     @SerializedName("total_nodes") val totalNodes: Int = 36,
+    @SerializedName("progress_percent") val progressPercent: Int = 0,
     @SerializedName("badges_count") val badgesCount: Int = 0,
     @SerializedName("certificates_count") val certificatesCount: Int = 0,
     @SerializedName("settings") val settings: UserSettings? = null
-)
+) {
+    val effectiveTotalNodes: Int
+        get() = if (totalNodes > 0) totalNodes else 36
+}
