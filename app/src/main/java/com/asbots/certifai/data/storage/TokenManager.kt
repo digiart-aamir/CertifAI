@@ -57,7 +57,7 @@ class TokenManager(context: Context) {
     fun getUserAvatar(): String? = prefs.getString(KEY_USER_AVATAR, null)
     fun getUserCoins(): Int = prefs.getInt(KEY_USER_COINS, 0)
     fun getUserCompletedNodes(): Int = prefs.getInt(KEY_USER_COMPLETED_NODES, 0)
-    fun getUserTotalNodes(): Int = prefs.getInt(KEY_USER_TOTAL_NODES, 36)
+    fun getUserTotalNodes(): Int = prefs.getInt(KEY_USER_TOTAL_NODES, 0)
 
     fun clearAuthToken() {
         prefs.edit()

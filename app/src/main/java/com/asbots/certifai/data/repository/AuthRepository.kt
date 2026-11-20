@@ -105,7 +105,7 @@ class AuthRepository(
                             user.avatar,
                             user.coinsBalance,
                             user.completedNodes,
-                            user.effectiveTotalNodes
+                            user.totalNodes
                         )
                         return Result.success(user)
                     }
@@ -124,7 +124,7 @@ class AuthRepository(
                     createdAt = null,
                     coinsBalance = 150,
                     completedNodes = 8,
-                    totalNodes = 36
+                    totalNodes = 0
                 )
 
                 tokenManager.saveAuthToken(fallbackToken)
@@ -135,7 +135,7 @@ class AuthRepository(
                     profile.avatar,
                     profile.coinsBalance,
                     profile.completedNodes,
-                    profile.effectiveTotalNodes
+                    profile.totalNodes
                 )
                 Result.success(profile)
             } else {
@@ -165,7 +165,7 @@ class AuthRepository(
             createdAt = "2026-03-01 10:20:00",
             coinsBalance = 150,
             completedNodes = 8,
-            totalNodes = 36,
+            totalNodes = 0,
             badgesCount = 2,
             certificatesCount = 1
         )
@@ -177,7 +177,7 @@ class AuthRepository(
             devProfile.avatar,
             devProfile.coinsBalance,
             devProfile.completedNodes,
-            devProfile.effectiveTotalNodes
+            devProfile.totalNodes
         )
         return devProfile
     }
@@ -206,7 +206,7 @@ class AuthRepository(
             createdAt = "2026-03-01 10:20:00",
             coinsBalance = savedCoins,
             completedNodes = savedCompletedNodes,
-            totalNodes = if (savedTotalNodes > 0) savedTotalNodes else 36,
+            totalNodes = savedTotalNodes,
             badgesCount = 0,
             certificatesCount = 0
         )
@@ -222,7 +222,7 @@ class AuthRepository(
                     serverUser.avatar,
                     serverUser.coinsBalance,
                     serverUser.completedNodes,
-                    serverUser.effectiveTotalNodes
+                    serverUser.totalNodes
                 )
                 Result.success(serverUser)
             } else {

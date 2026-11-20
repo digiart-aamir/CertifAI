@@ -136,9 +136,8 @@ class ProfileFragment : Fragment() {
         binding.tvVerifiedBadge.visibility = if (user.isVerified) View.VISIBLE else View.GONE
         binding.tvJoinedDateBadge.text = "Joined Mar 2026"
 
-        val totalNodesCount = user.effectiveTotalNodes
         binding.tvCoinsStat.text = "💎 ${user.coinsBalance} ASCoins"
-        binding.tvNodesStat.text = "🎯 ${user.completedNodes}/$totalNodesCount Topics"
+        binding.tvNodesStat.text = "🎯 ${user.completedNodes}/${user.totalNodes} Topics"
         binding.tvBadgesStat.text = "🏆 ${user.badgesCount} Badges"
 
         // Populate Tab 1 Form Fields
