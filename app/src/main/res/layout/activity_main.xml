@@ -66,12 +66,45 @@
             app:elevation="0dp"
             app:menu="@menu/drawer_menu" />
 
+        <!-- Theme Toggle Row with Animated Switch -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingHorizontal="20dp"
+            android:paddingVertical="10dp">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:contentDescription="Theme"
+                android:src="@android:drawable/ic_menu_compass"
+                app:tint="@color/text_primary_light" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="14dp"
+                android:layout_weight="1"
+                android:text="Dark Mode"
+                android:textColor="@color/text_primary_light"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <com.google.android.material.materialswitch.MaterialSwitch
+                android:id="@+id/themeSwitch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
         <!-- Divider Line -->
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginHorizontal="20dp"
-            android:layout_marginBottom="12dp"
+            android:layout_marginBottom="8dp"
             android:background="@color/border_light" />
 
         <!-- Monochrome Bottom Action Bar (Inside Drawer ONLY) -->
@@ -107,19 +140,7 @@
                 android:src="@android:drawable/ic_menu_rotate"
                 app:tint="@color/text_primary_light" />
 
-            <!-- 3. Theme Toggle -->
-            <ImageView
-                android:id="@+id/ivDrawerActionTheme"
-                android:layout_width="0dp"
-                android:layout_height="40dp"
-                android:layout_weight="1"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:contentDescription="Theme"
-                android:padding="8dp"
-                android:src="@android:drawable/ic_menu_compass"
-                app:tint="@color/text_primary_light" />
-
-            <!-- 4. Settings -->
+            <!-- 3. Settings -->
             <ImageView
                 android:id="@+id/ivDrawerActionSettings"
                 android:layout_width="0dp"

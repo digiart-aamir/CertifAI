@@ -68,6 +68,13 @@ class MainActivity : AppCompatActivity() {
     private var llDrawerProfileCard: View? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        val tokenManager = com.asbots.certifai.data.storage.TokenManager(this)
+        if (tokenManager.isThemeDark()) {
+            androidx.appcompat.app.AppCompatDelegate.setDefaultNightMode(androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES)
+        } else {
+            androidx.appcompat.app.AppCompatDelegate.setDefaultNightMode(androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO)
+        }
+
         super.onCreate(savedInstanceState)
         val windowBgColor = ContextCompat.getColor(this, R.color.white)
         window.setBackgroundDrawable(ColorDrawable(windowBgColor))
@@ -313,8 +320,16 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        binding.ivDrawerActionTheme.setOnClickListener {
-            Toast.makeText(this, "Theme Mode Toggled", Toast.LENGTH_SHORT).show()
+        // Theme Switch Toggle
+        val tokenManager = com.asbots.certifai.data.storage.TokenManager(this)
+        val themeSwitch = drawerPanel.findViewById<com.google.android.material.materialswitch.MaterialSwitch>(R.id.themeSwitch)
+        themeSwitch?.isChecked = tokenManager.isThemeDark()
+        themeSwitch?.setOnCheckedChangeListener { _, isChecked ->
+            tokenManager.saveThemeMode(isChecked)
+            androidx.appcompat.app.AppCompatDelegate.setDefaultNightMode(
+                if (isChecked) androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
+                else androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO
+            )
         }
 
         binding.ivDrawerActionSettings.setOnClickListener {

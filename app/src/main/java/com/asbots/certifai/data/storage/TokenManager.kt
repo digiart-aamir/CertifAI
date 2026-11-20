@@ -72,6 +72,14 @@ class TokenManager(context: Context) {
             .apply()
     }
 
+    fun saveThemeMode(isDark: Boolean) {
+        prefs.edit().putBoolean(KEY_THEME_DARK, isDark).apply()
+    }
+
+    fun isThemeDark(): Boolean {
+        return prefs.getBoolean(KEY_THEME_DARK, false)
+    }
+
     fun hasToken(): Boolean = !getAuthToken().isNullOrBlank()
 
     companion object {
@@ -83,5 +91,6 @@ class TokenManager(context: Context) {
         private const val KEY_USER_COINS = "user_coins"
         private const val KEY_USER_COMPLETED_NODES = "user_completed_nodes"
         private const val KEY_USER_TOTAL_NODES = "user_total_nodes"
+        private const val KEY_THEME_DARK = "theme_dark_mode"
     }
 }
