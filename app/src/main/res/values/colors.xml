@@ -24,6 +24,13 @@
     <color name="text_secondary_dark">#94A3B8</color>
     <color name="border_dark">#263449</color>
 
+    <!-- Dynamic Theme Aliases (DayNight) -->
+    <color name="bg_dynamic">#F8FAFC</color>
+    <color name="surface_dynamic">#FFFFFF</color>
+    <color name="text_primary_dynamic">#0F172A</color>
+    <color name="text_secondary_dynamic">#64748B</color>
+    <color name="border_dynamic">#E2E8F0</color>
+
     <color name="gold_badge">#F59E0B</color>
     <color name="success_green">#10B981</color>
     <color name="black">#FF000000</color>

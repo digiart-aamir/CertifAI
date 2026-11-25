@@ -2,22 +2,22 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/nav_home"
-        android:icon="@android:drawable/ic_menu_today"
+        android:icon="@drawable/ic_nav_home_vector"
         android:title="Home" />
     <item
         android:id="@+id/nav_pathways"
-        android:icon="@android:drawable/ic_menu_compass"
+        android:icon="@drawable/ic_nav_learn_vector"
         android:title="Learning Pathways" />
     <item
         android:id="@+id/nav_certificates"
-        android:icon="@android:drawable/ic_menu_agenda"
+        android:icon="@drawable/ic_nav_certs_vector"
         android:title="Certificates" />
     <item
         android:id="@+id/nav_settings"
-        android:icon="@android:drawable/ic_menu_manage"
+        android:icon="@drawable/ic_nav_settings_vector"
         android:title="Settings" />
     <item
         android:id="@+id/nav_help"
-        android:icon="@android:drawable/ic_menu_help"
+        android:icon="@drawable/ic_nav_help_vector"
         android:title="Help &amp; Support" />
 </menu>

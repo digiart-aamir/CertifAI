@@ -69,33 +69,37 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         val tokenManager = com.asbots.certifai.data.storage.TokenManager(this)
-        if (tokenManager.isThemeDark()) {
+        val isDark = tokenManager.isThemeDark()
+        if (isDark) {
             androidx.appcompat.app.AppCompatDelegate.setDefaultNightMode(androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES)
         } else {
             androidx.appcompat.app.AppCompatDelegate.setDefaultNightMode(androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO)
         }
 
         super.onCreate(savedInstanceState)
-        val windowBgColor = ContextCompat.getColor(this, R.color.white)
+        val windowBgColor = ContextCompat.getColor(this, if (isDark) R.color.bg_dark else R.color.white)
         window.setBackgroundDrawable(ColorDrawable(windowBgColor))
 
         enableEdgeToEdge(
-            statusBarStyle = SystemBarStyle.light(
-                ContextCompat.getColor(this, R.color.white),
-                ContextCompat.getColor(this, R.color.white)
-            )
+            statusBarStyle = if (isDark) {
+                SystemBarStyle.dark(ContextCompat.getColor(this, R.color.bg_dark))
+            } else {
+                SystemBarStyle.light(ContextCompat.getColor(this, R.color.white), ContextCompat.getColor(this, R.color.white))
+            }
         )
 
         @Suppress("DEPRECATION")
         window.statusBarColor = windowBgColor
-        WindowCompat.getInsetsController(window, window.decorView).isAppearanceLightStatusBars = true
+        WindowCompat.getInsetsController(window, window.decorView).isAppearanceLightStatusBars = !isDark
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.drawerLayout.setBackgroundColor(windowBgColor)
-        binding.main.setBackgroundColor(windowBgColor)
-        val panelBgColor = ContextCompat.getColor(this, R.color.white)
+        val bgDynamic = ContextCompat.getColor(this, if (isDark) R.color.bg_dark else R.color.white)
+        val panelBgColor = ContextCompat.getColor(this, if (isDark) R.color.surface_dark else R.color.white)
+
+        binding.drawerLayout.setBackgroundColor(bgDynamic)
+        binding.main.setBackgroundColor(bgDynamic)
         binding.llDrawerPanel.setBackgroundColor(panelBgColor)
 
         authRepository = AuthRepository(this)
@@ -320,16 +324,21 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        // Theme Switch Toggle
-        val tokenManager = com.asbots.certifai.data.storage.TokenManager(this)
-        val themeSwitch = drawerPanel.findViewById<com.google.android.material.materialswitch.MaterialSwitch>(R.id.themeSwitch)
-        themeSwitch?.isChecked = tokenManager.isThemeDark()
-        themeSwitch?.setOnCheckedChangeListener { _, isChecked ->
-            tokenManager.saveThemeMode(isChecked)
+        // Theme Toggle Icon in Bottom Action Bar
+        binding.ivDrawerActionTheme.setOnClickListener {
+            binding.drawerLayout.closeDrawer(GravityCompat.START)
+            val tokenManager = com.asbots.certifai.data.storage.TokenManager(this)
+            val newIsDark = !tokenManager.isThemeDark()
+            tokenManager.saveThemeMode(newIsDark)
             androidx.appcompat.app.AppCompatDelegate.setDefaultNightMode(
-                if (isChecked) androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
+                if (newIsDark) androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
                 else androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO
             )
+            Toast.makeText(
+                this,
+                if (newIsDark) "Switched to Dark Mode 🌙" else "Switched to Light Mode ☀️",
+                Toast.LENGTH_SHORT
+            ).show()
         }
 
         binding.ivDrawerActionSettings.setOnClickListener {

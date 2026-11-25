@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- App-wide Night Mode Theme Mappings -->
+    <color name="bg_light">#0B1220</color>
+    <color name="surface_light">#111C2E</color>
+    <color name="text_primary_light">#F1F5F9</color>
+    <color name="text_secondary_light">#94A3B8</color>
+    <color name="border_light">#263449</color>
+    <color name="bg_dynamic">#0B1220</color>
+    <color name="surface_dynamic">#111C2E</color>
+    <color name="text_primary_dynamic">#F1F5F9</color>
+    <color name="text_secondary_dynamic">#94A3B8</color>
+    <color name="border_dynamic">#263449</color>
+</resources>

@@ -5,7 +5,7 @@
     android:id="@+id/drawerLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/bg_dynamic"
     android:fitsSystemWindows="true"
     app:elevation="0dp"
     android:elevation="0dp"
@@ -17,7 +17,7 @@
         android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
+        android:background="@color/bg_dynamic"
         android:orientation="vertical">
 
         <!-- Unified Top Navigation Capsule Bar -->
@@ -48,7 +48,7 @@
         android:layout_width="320dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:background="@color/white"
+        android:background="@color/surface_dynamic"
         android:orientation="vertical"
         android:paddingBottom="20dp">
 
@@ -64,40 +64,11 @@
             android:background="@android:color/transparent"
             android:elevation="0dp"
             app:elevation="0dp"
+            app:itemTextColor="@color/text_primary_dynamic"
+            app:itemIconTint="@color/text_primary_dynamic"
             app:menu="@menu/drawer_menu" />
 
         <!-- Theme Toggle Row with Animated Switch -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingHorizontal="20dp"
-            android:paddingVertical="10dp">
-
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:contentDescription="Theme"
-                android:src="@android:drawable/ic_menu_compass"
-                app:tint="@color/text_primary_light" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="14dp"
-                android:layout_weight="1"
-                android:text="Dark Mode"
-                android:textColor="@color/text_primary_light"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-
-            <com.google.android.material.materialswitch.MaterialSwitch
-                android:id="@+id/themeSwitch"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-        </LinearLayout>
 
         <!-- Divider Line -->
         <View
@@ -105,7 +76,7 @@
             android:layout_height="1dp"
             android:layout_marginHorizontal="20dp"
             android:layout_marginBottom="8dp"
-            android:background="@color/border_light" />
+            android:background="@color/border_dynamic" />
 
         <!-- Monochrome Bottom Action Bar (Inside Drawer ONLY) -->
         <LinearLayout
@@ -125,8 +96,8 @@
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:contentDescription="Logout"
                 android:padding="8dp"
-                android:src="@android:drawable/ic_lock_power_off"
-                app:tint="@color/text_primary_light" />
+                android:src="@drawable/ic_nav_log_out"
+                app:tint="@color/text_primary_dynamic" />
 
             <!-- 2. Refresh -->
             <ImageView
@@ -137,8 +108,8 @@
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:contentDescription="Refresh"
                 android:padding="8dp"
-                android:src="@android:drawable/ic_menu_rotate"
-                app:tint="@color/text_primary_light" />
+                android:src="@drawable/ic_nav_cloud_sync"
+                app:tint="@color/text_primary_dynamic" />
 
             <!-- 3. Settings -->
             <ImageView
@@ -149,8 +120,20 @@
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:contentDescription="Settings"
                 android:padding="8dp"
-                android:src="@android:drawable/ic_menu_preferences"
-                app:tint="@color/text_primary_light" />
+                android:src="@drawable/ic_nav_settings_vector"
+                app:tint="@color/text_primary_dynamic" />
+
+            <!-- 4. Theme -->
+            <ImageView
+                android:id="@+id/ivDrawerActionTheme"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Theme"
+                android:padding="8dp"
+                android:src="@drawable/ic_nav_sun_moon"
+                app:tint="@color/text_primary_dynamic" />
 
         </LinearLayout>
 

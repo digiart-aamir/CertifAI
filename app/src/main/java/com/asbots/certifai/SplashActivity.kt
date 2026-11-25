@@ -1,6 +1,7 @@
 package com.asbots.certifai
 
 import android.animation.Animator
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -11,6 +12,7 @@ import com.airbnb.lottie.RenderMode
 import com.asbots.certifai.data.repository.AuthRepository
 import com.asbots.certifai.databinding.ActivitySplashBinding
 
+@SuppressLint("CustomSplashScreen")
 class SplashActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySplashBinding
